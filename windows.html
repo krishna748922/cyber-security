@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Windows Desktop Support Syllabus (Basic to Advanced)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Windows syllabus from basic to advanced: desktop, control panel, networking, storage, security, troubleshooting and interview preparation." />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #ffffff;
+      --card: #ffffff;
+      --border: #d0d7e2;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.09);
+      --accent-strong: #1d4ed8;
+      --text: #0f172a;
+      --muted: #6b7280;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius: 14px;
+      --shadow-soft: 0 14px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: radial-gradient(circle at top, #e0ebff 0, #f5f7fb 40%, #edf1f9 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(245, 247, 251, 0.96);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.7rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: radial-gradient(circle at 20% 20%, #60a5fa 0, #2563eb 40%, #1d4ed8 85%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.45);
+      color: #eff6ff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .title-main {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .title-main span {
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .nav-links a {
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-color: rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .menu-icon {
+      width: 18px;
+      height: 2px;
+      background: #111827;
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 2px;
+      background: #111827;
+      border-radius: 999px;
+      left: 0;
+    }
+
+    .menu-icon::before {
+      top: -5px;
+    }
+
+    .menu-icon::after {
+      top: 5px;
+    }
+
+    /* Sidebar Mobile */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+      display: none;
+      z-index: 40;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 240px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -12px 0 30px rgba(15, 23, 42, 0.25);
+      padding: 1.2rem 1rem;
+      transition: right 0.22s ease-out;
+      z-index: 41;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .sidebar-close {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-links a {
+      padding: 0.4rem 0.2rem;
+      border-radius: 8px;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .sidebar-links a:hover {
+      background: #f3f4f6;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.74rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.7rem;
+    }
+
+    .k-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+    }
+
+    h1.hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 0.96rem;
+      max-width: 34rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      padding: 0.18rem 0.6rem;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .pill-accent {
+      border-color: rgba(37, 99, 235, 0.9);
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+    }
+
+    .hero-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .hero-note strong {
+      color: var(--accent-strong);
+    }
+
+    .hero-note code {
+      background: #eef2ff;
+      padding: 0.1rem 0.3rem;
+      border-radius: 6px;
+      border: 1px solid rgba(129, 140, 248, 0.6);
+      font-size: 0.8rem;
+    }
+
+    /* Right hero card */
+    .hero-card {
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #ffffff, #e0ecff);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 1rem 1.2rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card ul {
+      margin-left: 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .hero-card li {
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-card-badge {
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card-badge span {
+      font-size: 0.9rem;
+    }
+
+    /* Main layout */
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.3fr);
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1rem 1rem 1.1rem;
+      margin-bottom: 1.1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h2 {
+      font-size: 1.02rem;
+      margin-bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      color: var(--muted);
+      background: #f9fafb;
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card small {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+      font-size: 0.83rem;
+    }
+
+    thead {
+      background: #e5ecff;
+    }
+
+    th, td {
+      padding: 0.45rem 0.55rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.6);
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: #111827;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    .module-label {
+      font-weight: 600;
+      color: var(--accent-strong);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .topic-list {
+      margin: 0;
+      padding-left: 1rem;
+      color: var(--muted);
+    }
+
+    .topic-list li {
+      margin-bottom: 0.18rem;
+    }
+
+    .level-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      border-radius: 999px;
+      padding: 0.12rem 0.55rem;
+      background: #eff6ff;
+      color: var(--accent-strong);
+      font-size: 0.76rem;
+      border: 1px solid rgba(37, 99, 235, 0.45);
+    }
+
+    .level-pill.adv {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+
+    .level-pill.int {
+      background: #ecfdf5;
+      border-color: #22c55e;
+      color: #166534;
+    }
+
+    .tip {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .tip strong {
+      color: var(--accent-strong);
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.5);
+      margin-top: auto;
+      background: #f9fafb;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-inner a {
+      color: var(--muted);
+    }
+
+    .footer-inner a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+      .menu-btn {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: 1rem;
+      }
+      .hero-title {
+        font-size: 1.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- Mobile sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">Windows Syllabus Menu</div>
+      <button class="sidebar-close" type="button" id="sidebarCloseBtn">&times;</button>
+    </div>
+    <nav class="sidebar-links">
+      <a href="#module1" onclick="closeSidebar()">Module 1 – Overview</a>
+      <a href="#module2" onclick="closeSidebar()">Module 2 – Desktop & UI</a>
+      <a href="#module3" onclick="closeSidebar()">Module 3 – Control Panel</a>
+      <a href="#module4" onclick="closeSidebar()">Module 4 – Networking</a>
+      <a href="#module5" onclick="closeSidebar()">Module 5 – Storage</a>
+      <a href="#module6" onclick="closeSidebar()">Module 6 – Security</a>
+      <a href="#module7" onclick="closeSidebar()">Module 7 – Troubleshooting</a>
+      <a href="#module8" onclick="closeSidebar()">Module 8 – Upgradation</a>
+      <a href="#module9" onclick="closeSidebar()">Module 9 – Interview</a>
+    </nav>
+    <div class="sidebar-footer">
+      Designed for Windows desktop support / helpdesk / L1–L2 roles.
+    </div>
+  </aside>
+
+  <!-- Top nav -->
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo">W</div>
+        <div>
+          <div class="title-main">Windows <span>Desktop</span> Syllabus</div>
+          <div class="tagline">From basic usage to support & troubleshooting.</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#module1" class="active">Overview</a>
+          <a href="#module3">Control Panel</a>
+          <a href="#module5">Storage</a>
+          <a href="#module7">Troubleshooting</a>
+          <a href="#module9">Interview</a>
+        </div>
+        <button class="menu-btn" type="button" id="menuBtn">
+          <div class="menu-icon"></div>
+          <span>Menu</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <div class="kicker">
+            <span class="k-dot"></span>
+            <span>Windows 7 / 8 / 10 / 11 · Desktop Support</span>
+          </div>
+          <h1 class="hero-title">
+            Complete <span>Windows syllabus</span> for support & training.
+          </h1>
+          <p class="hero-sub">
+            Use this syllabus for classroom training, institute batches or self-study.
+            It covers Windows basics, configuration, networking, storage, security,
+            troubleshooting and interview preparation for desktop support roles.
+          </p>
+          <div class="hero-pills">
+            <span class="pill pill-accent">Beginner → Advanced</span>
+            <span class="pill">Windows 10 & 11 focused</span>
+            <span class="pill">Desktop Support</span>
+            <span class="pill">Interview prep</span>
+          </div>
+          <p class="hero-note">
+            <strong>Trainer tip:</strong> You can print this page as PDF
+            from browser (<code>Ctrl + P</code>) and share as course syllabus.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-badge">
+            <span>📚</span> Course Structure
+          </div>
+          <h2>Course duration & structure</h2>
+          <ul>
+            <li><strong>Duration:</strong> 30–45 days (regular) / 6–8 weekends</li>
+            <li><strong>Target:</strong> Students, desktop support fresher, L1 engineer</li>
+            <li><strong>OS focus:</strong> Windows 10 & 11, basics of 7/8</li>
+            <li><strong>Practice:</strong> Real lab tasks + troubleshooting tickets</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Main syllabus -->
+      <section class="content-grid">
+        <!-- Left: main modules -->
+        <div>
+          <!-- Module 1 -->
+          <article class="card" id="module1">
+            <h2>
+              Module 1: Introduction & Editions
+              <span class="badge">Foundation</span>
+            </h2>
+            <p>
+              Overview of Windows as an operating system, different editions and
+              basic terminology used in support environments.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th style="width:25%;">Module</th>
+                <th>Topics</th>
+                <th style="width:20%;">Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">1.1 Windows overview</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>What is an Operating System?</li>
+                    <li>Client vs Server OS</li>
+                    <li>Windows evolution: 7, 8/8.1, 10, 11</li>
+                    <li>32-bit vs 64-bit, system requirements</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">1.2 Editions & features</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Windows Home, Pro, Enterprise, Education</li>
+                    <li>Key feature differences (BitLocker, Domain join, Group Policy)</li>
+                    <li>Licensing basics & activation overview</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 2 -->
+          <article class="card" id="module2">
+            <h2>
+              Module 2: Desktop, Taskbar & Start Menu
+              <span class="badge">User Interface</span>
+            </h2>
+            <p>
+              Learn the user interface so you can comfortably guide users and perform
+              basic customization tasks.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">2.1 Desktop & Taskbar</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Desktop icons, shortcuts, Recycle Bin</li>
+                    <li>Taskbar: pin/unpin apps, taskbar settings</li>
+                    <li>Notification area / system tray</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.2 Start Menu & Search</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Start Menu layout (Windows 10 & 11)</li>
+                    <li>Search box, Cortana / Search in Windows</li>
+                    <li>Recent apps, pinned apps, power options</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.3 File Explorer & File Management</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>File Explorer interface, Quick Access</li>
+                    <li>Copy, Move, Delete, Rename files & folders</li>
+                    <li>Libraries, This PC, Network locations</li>
+                    <li>Show hidden files, file extensions</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+            <p class="tip">
+              <strong>Lab idea:</strong> Ask students to organize a messy folder
+              structure into proper folders (Documents, Pictures, Backups, etc.).
+            </p>
+          </article>
+
+          <!-- Module 3 -->
+          <article class="card" id="module3">
+            <h2>
+              Module 3: Control Panel & Settings
+              <span class="badge">Configuration</span>
+            </h2>
+            <p>
+              Manage personalization, devices, user accounts and regional settings
+              using Control Panel and the Settings app.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">3.1 Personalization</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Themes, Background, Lock screen</li>
+                    <li>Screensaver & power settings basics</li>
+                    <li>Taskbar & Start Menu personalization</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.2 System & Devices</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>System properties, device specifications</li>
+                    <li>Device Manager: drivers, updating & rolling back</li>
+                    <li>Printers & scanners, default printer settings</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.3 Date/Time, Language & Region</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Setting time zone, sync with internet time</li>
+                    <li>Adding keyboard languages</li>
+                    <li>Regional format (numbers, date formats)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.4 User Accounts</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Local vs Microsoft Accounts</li>
+                    <li>Account types: Standard, Administrator</li>
+                    <li>Password, PIN & Picture password</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 4 -->
+          <article class="card" id="module4">
+            <h2>
+              Module 4: Networking & Sharing
+              <span class="badge">Connectivity</span>
+            </h2>
+            <p>
+              Configure basic networking, troubleshoot connectivity issues and work
+              with file & printer sharing.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">4.1 IP configuration</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>DHCP vs Static IP</li>
+                    <li>IP, Subnet mask, Gateway, DNS</li>
+                    <li>Using <code>ipconfig</code> and <code>ping</code></li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">4.2 Wi-Fi & Mobile Hotspot</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Connecting to Wi-Fi networks</li>
+                    <li>Saving and forgetting Wi-Fi profiles</li>
+                    <li>Creating Mobile Hotspot in Windows 10/11</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">4.3 Sharing & Permissions</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Workgroup basics and network discovery</li>
+                    <li>Sharing folders, setting share permissions</li>
+                    <li>Accessing shared folders & mapped drives</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 5 -->
+          <article class="card" id="module5">
+            <h2>
+              Module 5: Storage, Disk Management & Backup
+              <span class="badge">Data & Disks</span>
+            </h2>
+            <p>
+              Manage disks, partitions, encryption and backup features in Windows.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">5.1 Disk Management</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Understanding partitions: System, C:, Data drives</li>
+                    <li>Disk Management console: shrink/extend volume</li>
+                    <li>Initialize disk, change drive letter, format drive</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">5.2 Storage tools & cleanup</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Storage Sense & Disk Cleanup</li>
+                    <li>Defragment and Optimize Drives</li>
+                    <li>Handling USB / External drives, safely remove</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">5.3 Backup & File History</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>File History concept & configuration</li>
+                    <li>Backup & Restore (Windows 7 style)</li>
+                    <li>Basic restore of files and folders</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">5.4 BitLocker overview</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>What is BitLocker? (Windows Pro/Enterprise)</li>
+                    <li>Enabling BitLocker on a drive (conceptual)</li>
+                    <li>Recovery key and user responsibility</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+
+        <!-- Right: security, troubleshooting, interview -->
+        <aside>
+          <!-- Module 6 -->
+          <article class="card" id="module6">
+            <h2>
+              Module 6: Security, Updates & Protection
+              <span class="badge">Security</span>
+            </h2>
+            <p>
+              Keep Windows secure with updates, antivirus and basic security policies.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">6.1 Windows Update</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Types of updates (quality, feature updates)</li>
+                    <li>Check for updates, pause updates</li>
+                    <li>Update history & uninstalling updates</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">6.2 Windows Security</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Windows Defender Antivirus</li>
+                    <li>Firewall basics (on/off, allow an app)</li>
+                    <li>Virus & threat protection scan types</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">6.3 User Account Control</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Understanding UAC prompts</li>
+                    <li>Running apps as Administrator</li>
+                    <li>Basic security best practices for end users</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 7 -->
+          <article class="card" id="module7">
+            <h2>
+              Module 7: Tools, Logs & Troubleshooting
+              <span class="badge">Support skills</span>
+            </h2>
+            <p>
+              Use built-in tools to diagnose and fix common issues faced by users.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">7.1 System tools</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Task Manager – processes, startup apps</li>
+                    <li>MSConfig (System Configuration basics)</li>
+                    <li>Services console (start/stop, automatic/manual)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">7.2 Event Viewer & logs</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Types of logs: System, Application, Security</li>
+                    <li>Filtering & basic log reading for errors</li>
+                    <li>Exporting logs for analysis</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">7.3 Common troubleshooting</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Slow system / high CPU / low disk space</li>
+                    <li>No sound, no display, printer not working</li>
+                    <li>Network not working (IP conflict, DNS)</li>
+                    <li>Windows won’t boot: Safe Mode, Startup Repair (concept)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+            <p class="tip">
+              <strong>Trainer tip:</strong> Convert these topics into practical
+              “ticket scenarios” and ask students to troubleshoot step-by-step.
+            </p>
+          </article>
+
+          <!-- Module 8 -->
+          <article class="card" id="module8">
+            <h2>
+              Module 8: Installation & Upgradation
+              <span class="badge">Deployment</span>
+            </h2>
+            <p>
+              Understand the process of installing and upgrading Windows safely.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">8.1 Clean installation basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Boot order & BIOS/UEFI concept</li>
+                    <li>Bootable media (USB, ISO)</li>
+                    <li>Partition selection & formatting (concept)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">8.2 Upgrade paths</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Upgrading Windows 7/8 to Windows 10</li>
+                    <li>Moving from Windows 10 to Windows 11 (requirements)</li>
+                    <li>Backup recommendation before upgrade</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 9 -->
+          <article class="card" id="module9">
+            <h2>
+              Module 9: Productivity & Interview Preparation
+              <span class="badge">Job ready</span>
+            </h2>
+            <p>
+              Improve speed with shortcuts and prepare for desktop support interviews.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">9.1 Keyboard shortcuts</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Basic: <code>Ctrl + C/V/X</code>, <code>Alt + Tab</code>, <code>Alt + F4</code></li>
+                    <li>Windows key shortcuts (Win + E, R, D, L, I, etc.)</li>
+                    <li>Multiple desktops (Win + Tab, Win + Ctrl + D)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">9.2 Desktop support interview topics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Explain difference between Workgroup and Domain</li>
+                    <li>How to fix “No Internet” when Wi-Fi is connected</li>
+                    <li>How to check system configuration & performance</li>
+                    <li>Common ticket questions from Windows users</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+            <p class="tip">
+              <strong>Bonus:</strong> Add a separate sheet with 30–40 Windows
+              interview questions and map each question to the module above for revision.
+            </p>
+          </article>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 Windows Desktop Syllabus · Customize this page with your institute logo.</span>
+      <span>Trainer: Add your institute name, batch timing & contact info here.</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+
+  function openSidebar() {
+    sidebar.style.right = '0';
+    overlay.style.display = 'block';
+  }
+
+  function closeSidebar() {
+    sidebar.style.right = '-260px';
+    overlay.style.display = 'none';
+  }
+
+  if (menuBtn) menuBtn.addEventListener('click', openSidebar);
+  if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+  if (overlay) overlay.addEventListener('click', closeSidebar);
+
+  // Expose for inline onclick
+  window.closeSidebar = closeSidebar;
+</script>
+</body>
+</html>
