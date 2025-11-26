@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CCNA (200-301) Syllabus – Routing, Switching & Security</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CCNA 200-301 syllabus: network fundamentals, switching, routing, IP services, wireless, security, automation, troubleshooting and interview preparation." />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #ffffff;
+      --card: #ffffff;
+      --border: #d0d7e2;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.09);
+      --accent-strong: #1d4ed8;
+      --text: #0f172a;
+      --muted: #6b7280;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius: 14px;
+      --shadow-soft: 0 14px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: radial-gradient(circle at top, #e0ebff 0, #f5f7fb 40%, #edf1f9 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(245, 247, 251, 0.96);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.7rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: radial-gradient(circle at 20% 20%, #60a5fa 0, #2563eb 40%, #1d4ed8 85%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.45);
+      color: #eff6ff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .title-main {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .title-main span {
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .nav-links a {
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-color: rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .menu-icon {
+      width: 18px;
+      height: 2px;
+      background: #111827;
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 2px;
+      background: #111827;
+      border-radius: 999px;
+      left: 0;
+    }
+
+    .menu-icon::before {
+      top: -5px;
+    }
+
+    .menu-icon::after {
+      top: 5px;
+    }
+
+    /* Sidebar Mobile */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+      display: none;
+      z-index: 40;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 240px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -12px 0 30px rgba(15, 23, 42, 0.25);
+      padding: 1.2rem 1rem;
+      transition: right 0.22s ease-out;
+      z-index: 41;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .sidebar-close {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-links a {
+      padding: 0.4rem 0.2rem;
+      border-radius: 8px;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .sidebar-links a:hover {
+      background: #f3f4f6;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.74rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.7rem;
+    }
+
+    .k-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+    }
+
+    h1.hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 0.96rem;
+      max-width: 34rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      padding: 0.18rem 0.6rem;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .pill-accent {
+      border-color: rgba(37, 99, 235, 0.9);
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+    }
+
+    .hero-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .hero-note strong {
+      color: var(--accent-strong);
+    }
+
+    .hero-note code {
+      background: #eef2ff;
+      padding: 0.1rem 0.3rem;
+      border-radius: 6px;
+      border: 1px solid rgba(129, 140, 248, 0.6);
+      font-size: 0.8rem;
+    }
+
+    /* Right hero card */
+    .hero-card {
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #ffffff, #e0ecff);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 1rem 1.2rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card ul {
+      margin-left: 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .hero-card li {
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-card-badge {
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card-badge span {
+      font-size: 0.9rem;
+    }
+
+    /* Main layout */
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.3fr);
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1rem 1rem 1.1rem;
+      margin-bottom: 1.1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h2 {
+      font-size: 1.02rem;
+      margin-bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      color: var(--muted);
+      background: #f9fafb;
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card small {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+      font-size: 0.83rem;
+    }
+
+    thead {
+      background: #e5ecff;
+    }
+
+    th, td {
+      padding: 0.45rem 0.55rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.6);
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: #111827;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    .module-label {
+      font-weight: 600;
+      color: var(--accent-strong);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .topic-list {
+      margin: 0;
+      padding-left: 1rem;
+      color: var(--muted);
+    }
+
+    .topic-list li {
+      margin-bottom: 0.18rem;
+    }
+
+    .level-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      border-radius: 999px;
+      padding: 0.12rem 0.55rem;
+      background: #eff6ff;
+      color: var(--accent-strong);
+      font-size: 0.76rem;
+      border: 1px solid rgba(37, 99, 235, 0.45);
+    }
+
+    .level-pill.adv {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+
+    .level-pill.int {
+      background: #ecfdf5;
+      border-color: #22c55e;
+      color: #166534;
+    }
+
+    .tip {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .tip strong {
+      color: var(--accent-strong);
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.5);
+      margin-top: auto;
+      background: #f9fafb;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-inner a {
+      color: var(--muted);
+    }
+
+    .footer-inner a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+      .menu-btn {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: 1rem;
+      }
+      .hero-title {
+        font-size: 1.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- Mobile sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">CCNA Syllabus Menu</div>
+      <button class="sidebar-close" type="button" id="sidebarCloseBtn">&times;</button>
+    </div>
+    <nav class="sidebar-links">
+      <a href="#module1" onclick="closeSidebar()">Module 1 – Fundamentals</a>
+      <a href="#module2" onclick="closeSidebar()">Module 2 – Switching</a>
+      <a href="#module3" onclick="closeSidebar()">Module 3 – Routing</a>
+      <a href="#module4" onclick="closeSidebar()">Module 4 – IP Services</a>
+      <a href="#module5" onclick="closeSidebar()">Module 5 – Security</a>
+      <a href="#module6" onclick="closeSidebar()">Module 6 – Wireless</a>
+      <a href="#module7" onclick="closeSidebar()">Module 7 – Automation</a>
+      <a href="#module8" onclick="closeSidebar()">Module 8 – Troubleshooting</a>
+    </nav>
+    <div class="sidebar-footer">
+      Designed for CCNA 200-301 / network engineer preparation.
+    </div>
+  </aside>
+
+  <!-- Top nav -->
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo">C</div>
+        <div>
+          <div class="title-main">CCNA <span>(200-301)</span> Syllabus</div>
+          <div class="tagline">Routing, switching, wireless, security & automation.</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#module1" class="active">Overview</a>
+          <a href="#module2">Switching</a>
+          <a href="#module3">Routing</a>
+          <a href="#module4">IP Services</a>
+          <a href="#module5">Security</a>
+          <a href="#module8">Troubleshooting</a>
+        </div>
+        <button class="menu-btn" type="button" id="menuBtn">
+          <div class="menu-icon"></div>
+          <span>Menu</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <div class="kicker">
+            <span class="k-dot"></span>
+            <span>CCNA 200-301 · Routing · Switching · Security · Automation</span>
+          </div>
+          <h1 class="hero-title">
+            Complete <span>CCNA syllabus</span> for training & self-study.
+          </h1>
+          <p class="hero-sub">
+            Use this page as a complete CCNA 200-301 syllabus for classroom batches,
+            institute courses or self-preparation. It covers network fundamentals,
+            switching, routing, IP services, wireless, security, automation and
+            troubleshooting with interview focus.
+          </p>
+          <div class="hero-pills">
+            <span class="pill pill-accent">Beginner → Associate</span>
+            <span class="pill">Routing & Switching</span>
+            <span class="pill">Security & Wireless</span>
+            <span class="pill">Automation basics</span>
+          </div>
+          <p class="hero-note">
+            <strong>Trainer tip:</strong> Print this page as PDF
+            (<code>Ctrl + P</code>) and share as official CCNA course syllabus.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-badge">
+            <span>🎓</span> Course Structure
+          </div>
+          <h2>Course duration & structure</h2>
+          <ul>
+            <li><strong>Duration:</strong> 60–90 days (regular) / 10–14 weekends</li>
+            <li><strong>Target:</strong> Students, desktop support, junior network engineers</li>
+            <li><strong>Focus:</strong> CCNA 200-301 exam objectives</li>
+            <li><strong>Practice:</strong> Packet Tracer / EVE-NG / GNS3 labs</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Main syllabus -->
+      <section class="content-grid">
+        <!-- Left: main modules -->
+        <div>
+          <!-- Module 1 -->
+          <article class="card" id="module1">
+            <h2>
+              Module 1: Network Fundamentals
+              <span class="badge">Foundation</span>
+            </h2>
+            <p>
+              Core networking building blocks needed before moving to switching
+              and routing configuration.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th style="width:25%;">Module</th>
+                <th>Topics</th>
+                <th style="width:20%;">Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">1.1 Basic concepts</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Network types: LAN, WAN, MAN, small office network</li>
+                    <li>Client and server, peer-to-peer</li>
+                    <li>Throughput, latency, bandwidth, jitter (concept)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">1.2 Topologies & media</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Star, mesh, hybrid layouts</li>
+                    <li>UTP, STP, fiber basics</li>
+                    <li>Connectors, transceivers, basic cabling rules</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">1.3 Models & addressing</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>OSI and TCP IP models (layers & functions)</li>
+                    <li>IPv4 structure, network & host part</li>
+                    <li>IPv6 structure and advantages (high-level)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">1.4 Subnetting basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Subnet mask and CIDR notation</li>
+                    <li>Finding network ID, broadcast ID, usable hosts</li>
+                    <li>Simple subnet design examples</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 2 -->
+          <article class="card" id="module2">
+            <h2>
+              Module 2: Switching, VLANs & EtherChannel
+              <span class="badge">Layer 2</span>
+            </h2>
+            <p>
+              Learn Layer 2 concepts, VLAN segmentation and link aggregation
+              used in campus networks.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">2.1 Switch operation</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>MAC addresses and address table</li>
+                    <li>Unicast, broadcast and multicast frames</li>
+                    <li>Collision domains and broadcast domains</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.2 Basic switch configuration</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Console access and remote management (idea)</li>
+                    <li>Hostname, passwords, secure management</li>
+                    <li>Assigning management IP to a switch</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.3 VLANs & trunks</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>VLAN concept, advantages and types</li>
+                    <li>Access ports vs trunk ports</li>
+                    <li>VLAN configuration and verification commands</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.4 Inter-VLAN & EtherChannel</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Router-on-a-stick concept (high-level)</li>
+                    <li>Layer 3 switching idea</li>
+                    <li>EtherChannel basics and use cases</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 3 -->
+          <article class="card" id="module3">
+            <h2>
+              Module 3: Routing & OSPF
+              <span class="badge">Layer 3</span>
+            </h2>
+            <p>
+              Configure routers for IPv4 and IPv6, static routes and OSPF
+              as the primary dynamic routing protocol.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">3.1 Routing basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Router roles in a network</li>
+                    <li>Routing table and route types</li>
+                    <li>Administrative distance and metrics (idea)</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.2 Static & default routes</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Static route configuration examples</li>
+                    <li>Default route and default gateway concept</li>
+                    <li>Route verification and troubleshooting</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.3 OSPF single-area</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Link-state concept and path calculation idea</li>
+                    <li>OSPF terminology: neighbor, area, router ID</li>
+                    <li>Single-area OSPF configuration for IPv4</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.4 IPv6 routing basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>IPv6 address types in CCNA scope</li>
+                    <li>IPv6 static route concept</li>
+                    <li>High-level OSPF for IPv6 overview</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 4 -->
+          <article class="card" id="module4">
+            <h2>
+              Module 4: IP Services (DHCP, NAT, QoS & more)
+              <span class="badge">Services</span>
+            </h2>
+            <p>
+              Learn common services required to run production networks and
+              support users.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">4.1 DHCP & name services</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Dynamic address assignment concept</li>
+                    <li>Basic relay idea for different networks</li>
+                    <li>Role of name resolution in user connectivity</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">4.2 NAT & PAT</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Address translation concept and use cases</li>
+                    <li>Inside and outside terminology</li>
+                    <li>Static, dynamic and overload (port-based) examples</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">4.3 NTP, logs & monitoring</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Time synchronization basics</li>
+                    <li>Log collection and importance for troubleshooting</li>
+                    <li>High-level management with monitoring protocols</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">4.4 QoS overview</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Need for quality of service in networks</li>
+                    <li>Classification, marking and queuing idea</li>
+                    <li>Simple use cases such as voice traffic priority</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+
+        <!-- Right: security, wireless, automation, troubleshooting -->
+        <aside>
+          <!-- Module 5 -->
+          <article class="card" id="module5">
+            <h2>
+              Module 5: Security Fundamentals & Device Hardening
+              <span class="badge">Security</span>
+            </h2>
+            <p>
+              Introduce security concepts, secure device access and basic
+              filtering used in CCNA-level environments.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">5.1 Security basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>CIA triad and basic attack types</li>
+                    <li>Social engineering and insider risk (high-level)</li>
+                    <li>Security policy and password best practices</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">5.2 Device hardening</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Securing remote and local access to devices</li>
+                    <li>Logical separation for management traffic</li>
+                    <li>Banner messages and basic lockdown steps</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">5.3 ACL basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Standard vs extended access control concepts</li>
+                    <li>Placement rules and simple examples</li>
+                    <li>Filtering for management and user traffic</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 6 -->
+          <article class="card" id="module6">
+            <h2>
+              Module 6: Wireless Networking & WLAN Components
+              <span class="badge">Wireless</span>
+            </h2>
+            <p>
+              Cover wireless standards, basic controller-based deployments and
+              common WLAN security options.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">6.1 Wireless fundamentals</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Common wireless standards families</li>
+                    <li>2.4 GHz vs 5 GHz channels and interference</li>
+                    <li>Coverage, signal strength and basic design ideas</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">6.2 WLAN components</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Access points and controllers (concept)</li>
+                    <li>SSID, basic service set ideas</li>
+                    <li>Standalone vs central management overview</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">6.3 Wireless security</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Open vs secured WLANs</li>
+                    <li>Personal and enterprise security modes (high-level)</li>
+                    <li>Best practices for small office WLAN configuration</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 7 -->
+          <article class="card" id="module7">
+            <h2>
+              Module 7: Automation & Programmability
+              <span class="badge">Modern</span>
+            </h2>
+            <p>
+              Understand controller-based networking, basic APIs and data formats
+              expected in CCNA.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">7.1 Controller-based networking</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Traditional vs software-defined control planes</li>
+                    <li>Central controller concept</li>
+                    <li>Separation of management and forwarding roles</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">7.2 APIs & data formats</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Role of programmable interfaces in networking</li>
+                    <li>Structured data with JSON and XML</li>
+                    <li>High-level example of getting device information programmatically</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 8 -->
+          <article class="card" id="module8">
+            <h2>
+              Module 8: Troubleshooting, Labs & Interview Prep
+              <span class="badge">Job Ready</span>
+            </h2>
+            <p>
+              Combine all concepts with labs, common issues and CCNA-style
+              interview questions.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">8.1 Tools & methods</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Commands like ping, traceroute, address view, name lookup</li>
+                    <li>Top-down and bottom-up troubleshooting approaches</li>
+                    <li>Reading status outputs from devices</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">8.2 Common CCNA issues</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>VLAN and trunk mismatches</li>
+                    <li>Incorrect gateways and missing routes</li>
+                    <li>Wireless coverage and interference problems</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">8.3 Labs & interview questions</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Small office topology lab in a simulator</li>
+                    <li>Practice with configuration, backup and restore</li>
+                    <li>CCNA-style theory and scenario interview questions</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill adv">Advanced</span></td>
+              </tr>
+              </tbody>
+            </table>
+            <p class="tip">
+              <strong>Trainer tip:</strong> Map each lab and interview question back
+              to the modules above so students can revise by topic.
+            </p>
+          </article>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 CCNA 200-301 Syllabus · Customize this page with your institute logo.</span>
+      <span>Trainer: Add your institute name, batch timing & contact info here.</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+
+  function openSidebar() {
+    sidebar.style.right = '0';
+    overlay.style.display = 'block';
+  }
+
+  function closeSidebar() {
+    sidebar.style.right = '-260px';
+    overlay.style.display = 'none';
+  }
+
+  if (menuBtn) menuBtn.addEventListener('click', openSidebar);
+  if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+  if (overlay) overlay.addEventListener('click', closeSidebar);
+
+  // Expose for inline onclick
+  window.closeSidebar = closeSidebar;
+</script>
+</body>
+</html>
