@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <title>Basic Linux Commands - Quick Reference</title>
@@ -7,6 +7,33 @@
   <meta name="description" content="Basic Linux commands with examples and explanations for beginners." />
   <style>
     :root {
+      /* Light theme defaults */
+      --bg: #f5f7fb;
+      --bg-alt: #ffffff;
+      --card: #ffffff;
+      --border: #d0d7e2;
+      --accent: #16a34a;
+      --accent-soft: rgba(22, 163, 74, 0.08);
+      --text: #0f172a;
+      --muted: #6b7280;
+      --nav-bg: rgba(245, 247, 251, 0.9);
+      --nav-border: rgba(148, 163, 184, 0.35);
+      --footer-bg: #f9fafb;
+      --terminal-bg1: #ffffff;
+      --terminal-bg2: #e5f3ff;
+      --terminal-header-bg1: #e5e7eb;
+      --terminal-header-bg2: #dbeafe;
+      --table-head-bg: #e5ecff;
+      --table-row-alt: #f9fafb;
+      --code-bg: #f3f4f6;
+      --code-border: rgba(209, 213, 219, 0.9);
+      --shadow-soft: 0 14px 35px rgba(15, 23, 42, 0.09);
+      --nav-icon: #111827;
+      --overlay-bg: rgba(15, 23, 42, 0.35);
+    }
+
+    /* Dark theme overrides */
+    [data-theme="dark"] {
       --bg: #020617;
       --bg-alt: #020617;
       --card: #020617;
@@ -15,9 +42,20 @@
       --accent-soft: rgba(34, 197, 94, 0.15);
       --text: #e5e7eb;
       --muted: #9ca3af;
-      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --radius: 14px;
-      --shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+      --nav-bg: rgba(15, 23, 42, 0.95);
+      --nav-border: rgba(148, 163, 184, 0.35);
+      --footer-bg: #020617;
+      --terminal-bg1: #020617;
+      --terminal-bg2: #020617;
+      --terminal-header-bg1: #020617;
+      --terminal-header-bg2: #064e3b;
+      --table-head-bg: rgba(15, 23, 42, 0.95);
+      --table-row-alt: rgba(15, 23, 42, 0.85);
+      --code-bg: rgba(15, 23, 42, 0.9);
+      --code-border: rgba(148, 163, 184, 0.4);
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.85);
+      --nav-icon: #e5e7eb;
+      --overlay-bg: rgba(15, 23, 42, 0.55);
     }
 
     * {
@@ -27,8 +65,8 @@
     }
 
     body {
-      font-family: var(--font);
-      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #e5edff 0, var(--bg) 40%, var(--bg) 100%);
       color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -49,18 +87,14 @@
       flex-direction: column;
     }
 
+    /* Header / Nav */
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(
-        to bottom,
-        rgba(15, 23, 42, 0.95),
-        rgba(15, 23, 42, 0.6),
-        transparent
-      );
-      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      z-index: 30;
+      backdrop-filter: blur(12px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--nav-border);
     }
 
     .nav {
@@ -80,14 +114,14 @@
     }
 
     .logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 20% 20%, #22c55e 0, #16a34a 35%, #14532d 70%);
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: radial-gradient(circle at 20% 20%, #22c55e 0, #16a34a 40%, #15803d 85%);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.7);
+      box-shadow: 0 8px 18px rgba(22, 163, 74, 0.45);
       color: #ecfdf5;
       font-size: 18px;
       font-weight: 700;
@@ -107,6 +141,12 @@
       color: var(--muted);
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
     .nav-links {
       display: flex;
       gap: 0.75rem;
@@ -122,10 +162,139 @@
 
     .nav-links a:hover,
     .nav-links a.active {
-      border-color: rgba(148, 163, 184, 0.55);
-      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.06);
       color: var(--text);
       text-decoration: none;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff10;
+      padding: 0.25rem 0.7rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--muted);
+    }
+
+    .theme-toggle span.icon {
+      font-size: 1rem;
+    }
+
+    /* Mobile menu button */
+    .menu-btn {
+      display: none;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff10;
+      border-radius: 999px;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .menu-icon {
+      width: 18px;
+      height: 2px;
+      background: var(--nav-icon);
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 2px;
+      background: var(--nav-icon);
+      border-radius: 999px;
+      left: 0;
+    }
+
+    .menu-icon::before {
+      top: -5px;
+    }
+
+    .menu-icon::after {
+      top: 5px;
+    }
+
+    /* Mobile sidebar overlay */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay-bg);
+      display: none;
+      z-index: 40;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 240px;
+      height: 100%;
+      background: var(--bg-alt);
+      box-shadow: -12px 0 30px rgba(15, 23, 42, 0.25);
+      padding: 1.2rem 1rem;
+      transition: right 0.22s ease-out;
+      z-index: 41;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .sidebar-close {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-links a {
+      padding: 0.4rem 0.2rem;
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .sidebar-links a:hover {
+      background: rgba(148, 163, 184, 0.15);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     main {
@@ -151,12 +320,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.22rem 0.7rem;
+      padding: 0.18rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.7);
       font-size: 0.74rem;
       color: var(--muted);
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(255, 255, 255, 0.06);
       margin-bottom: 0.7rem;
     }
 
@@ -165,7 +334,7 @@
       height: 6px;
       border-radius: 999px;
       background: var(--accent);
-      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.25);
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.25);
     }
 
     h1.hero-title {
@@ -180,7 +349,7 @@
 
     .hero-sub {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       max-width: 34rem;
       margin-bottom: 1.1rem;
     }
@@ -191,40 +360,45 @@
       gap: 0.5rem;
       font-size: 0.78rem;
       color: var(--muted);
-      margin-bottom: 1.3rem;
+      margin-bottom: 1.2rem;
     }
 
     .pill {
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      padding: 0.22rem 0.6rem;
-      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      padding: 0.18rem 0.6rem;
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .pill-accent {
-      border-color: rgba(34, 197, 94, 0.7);
+      border-color: rgba(22, 163, 74, 0.85);
       background: var(--accent-soft);
+      color: #166534;
+    }
+
+    [data-theme="dark"] .pill-accent {
       color: #bbf7d0;
     }
 
     .hero-note {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--muted);
     }
 
     .hero-note code {
-      background: rgba(15, 23, 42, 0.9);
-      padding: 0.08rem 0.3rem;
+      background: var(--code-bg);
+      padding: 0.1rem 0.3rem;
       border-radius: 6px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      font-size: 0.78rem;
+      border: 1px solid var(--code-border);
+      font-size: 0.8rem;
     }
 
+    /* Terminal */
     .terminal {
       border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at 0 0, #0f172a 0, #020617 55%);
-      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, var(--terminal-bg1), var(--terminal-bg2));
+      box-shadow: var(--shadow-soft);
       overflow: hidden;
       font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco,
         Consolas, "Liberation Mono", "Courier New", monospace;
@@ -236,8 +410,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.55rem 0.9rem;
-      background: linear-gradient(to right, #020617, #020617, #064e3b);
-      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+      background: linear-gradient(to right, var(--terminal-header-bg1), var(--terminal-header-bg2));
+      border-bottom: 1px solid var(--border);
     }
 
     .dots {
@@ -249,7 +423,7 @@
       width: 9px;
       height: 9px;
       border-radius: 999px;
-      background: #1f2933;
+      background: #e5e7eb;
     }
 
     .dot.red { background: #f97373; }
@@ -257,7 +431,7 @@
     .dot.green { background: #22c55e; }
 
     .terminal-title {
-      color: #9ca3af;
+      color: var(--muted);
       font-size: 0.76rem;
     }
 
@@ -271,19 +445,23 @@
       white-space: pre;
     }
 
-    .t-prompt { color: #22c55e; }
-    .t-path { color: #60a5fa; }
-    .t-cmd { color: #e5e7eb; }
-    .t-comment { color: #6b7280; }
+    .t-prompt { color: #16a34a; }
+    .t-path { color: #2563eb; }
+    .t-cmd { color: var(--text); }
+    .t-comment { color: var(--muted); }
     .t-highlight {
       display: inline-block;
       margin-top: 0.35rem;
       padding: 0.16rem 0.45rem;
       border-radius: 999px;
-      border: 1px solid rgba(34, 197, 94, 0.5);
-      background: rgba(34, 197, 94, 0.16);
-      color: #bbf7d0;
+      border: 1px solid rgba(22, 163, 74, 0.55);
+      background: var(--accent-soft);
+      color: #166534;
     }
+
+    [data-theme="dark"] .t-prompt { color: #22c55e; }
+    [data-theme="dark"] .t-path { color: #60a5fa; }
+    [data-theme="dark"] .t-highlight { color: #bbf7d0; }
 
     /* Layout sections */
     .content-grid {
@@ -293,12 +471,12 @@
     }
 
     .card {
-      background: rgba(15, 23, 42, 0.95);
-      border-radius: var(--radius);
+      background: var(--card);
+      border-radius: 14px;
       border: 1px solid var(--border);
       padding: 1rem 1rem 1.1rem;
       margin-bottom: 1.1rem;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.8);
+      box-shadow: var(--shadow-soft);
     }
 
     .card h2 {
@@ -310,19 +488,15 @@
       gap: 0.5rem;
     }
 
-    .card h3 {
-      font-size: 0.94rem;
-      margin: 0.5rem 0 0.4rem;
-    }
-
     .badge {
       font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       padding: 0.16rem 0.55rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.65);
+      border: 1px solid rgba(148, 163, 184, 0.9);
       color: var(--muted);
+      background: rgba(249, 250, 251, 0.12);
     }
 
     .card p {
@@ -358,34 +532,34 @@
     }
 
     thead {
-      background: rgba(15, 23, 42, 0.95);
+      background: var(--table-head-bg);
     }
 
     th, td {
       padding: 0.45rem 0.55rem;
-      border-bottom: 1px solid rgba(30, 64, 175, 0.4);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.6);
       vertical-align: top;
     }
 
     th {
       text-align: left;
-      color: #cbd5f5;
+      color: var(--text);
       font-weight: 600;
       border-bottom-width: 1px;
     }
 
     tbody tr:nth-child(even) {
-      background: rgba(15, 23, 42, 0.85);
+      background: var(--table-row-alt);
     }
 
     code {
       font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
       font-size: 0.8rem;
-      background: rgba(15, 23, 42, 0.9);
+      background: var(--code-bg);
       padding: 0.08rem 0.25rem;
       border-radius: 6px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      border: 1px solid var(--code-border);
     }
 
     .tip {
@@ -395,8 +569,9 @@
     }
 
     footer {
-      border-top: 1px solid rgba(148, 163, 184, 0.25);
+      border-top: 1px solid rgba(148, 163, 184, 0.5);
       margin-top: auto;
+      background: var(--footer-bg);
     }
 
     .footer-inner {
@@ -420,6 +595,7 @@
       color: var(--accent);
     }
 
+    /* Responsive */
     @media (max-width: 880px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
@@ -430,6 +606,9 @@
       .nav-links {
         display: none;
       }
+      .menu-btn {
+        display: inline-flex;
+      }
     }
 
     @media (max-width: 640px) {
@@ -437,13 +616,31 @@
         padding-inline: 1rem;
       }
       .hero-title {
-        font-size: 1.8rem;
+        font-size: 1.85rem;
       }
     }
   </style>
 </head>
 <body>
 <div class="page">
+  <!-- Mobile overlay + sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">Linux Basics Menu</div>
+      <button class="sidebar-close" type="button" id="sidebarCloseBtn">&times;</button>
+    </div>
+    <nav class="sidebar-links">
+      <a href="#files" onclick="closeSidebar()">Files & Folders</a>
+      <a href="#permissions" onclick="closeSidebar()">Permissions</a>
+      <a href="#system" onclick="closeSidebar()">System & Processes</a>
+      <a href="#network" onclick="closeSidebar()">Network Commands</a>
+    </nav>
+    <div class="sidebar-footer">
+      Tip: Use this page during lab practice or in your Linux class.
+    </div>
+  </aside>
+
   <header>
     <nav class="nav">
       <div class="nav-left">
@@ -453,11 +650,23 @@
           <div class="tagline">Essential terminal commands for beginners.</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="#files" class="active">Files & Folders</a>
-        <a href="#permissions">Permissions</a>
-        <a href="#system">System & Processes</a>
-        <a href="#network">Network</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#files" class="active">Files & Folders</a>
+          <a href="#permissions">Permissions</a>
+          <a href="#system">System & Processes</a>
+          <a href="#network">Network</a>
+        </div>
+
+        <button class="theme-toggle" type="button" id="themeToggle">
+          <span class="icon" id="themeIcon">🌞</span>
+          <span id="themeLabel">Light</span>
+        </button>
+
+        <button class="menu-btn" type="button" id="menuBtn">
+          <div class="menu-icon"></div>
+          <span>Menu</span>
+        </button>
       </div>
     </nav>
   </header>
@@ -476,8 +685,8 @@
           </h1>
           <p class="hero-sub">
             Use this page as a quick reference while teaching or practising.
-            All commands are safe to try in a lab environment and work on
-            most distributions (Ubuntu, Debian, RHEL, CentOS, Fedora).
+            All commands are safe to try in a lab environment and work on most
+            distributions (Ubuntu, Debian, RHEL, CentOS, Fedora).
           </p>
           <div class="hero-pills">
             <span class="pill pill-accent">Beginner friendly</span>
@@ -487,7 +696,7 @@
             <span class="pill">Networking</span>
           </div>
           <p class="hero-note">
-            Open terminal and type: <code>clear</code> to clean the screen,  
+            Open terminal and type: <code>clear</code> to clean the screen,&nbsp;
             <code>man &lt;command&gt;</code> to read the manual.
           </p>
         </div>
@@ -518,7 +727,7 @@
               <span class="t-prompt">krishna@linux</span>:<span class="t-path">~/lab</span>$ <span class="t-cmd">cat file1.txt</span>
             </span>
             <span class="t-line t-highlight">
-              Tip: use <code>tab</code> for auto-complete &nbsp;·&nbsp; <code>↑ / ↓</code> to repeat previous commands
+              Tip: use <code>Tab</code> for auto-complete · <code>↑ / ↓</code> to repeat commands
             </span>
           </div>
         </div>
@@ -868,11 +1077,73 @@
     <div class="footer-inner">
       <span>© 2025 Linux Basics Sheet · You learn Linux by using the terminal.</span>
       <span>
-        Edit this page for your institute:
+        Customize for your institute:
         <a href="#">Add your logo / name here</a>
       </span>
     </div>
   </footer>
 </div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+
+  function openSidebar() {
+    sidebar.style.right = '0';
+    overlay.style.display = 'block';
+  }
+
+  function closeSidebar() {
+    sidebar.style.right = '-260px';
+    overlay.style.display = 'none';
+  }
+
+  menuBtn.addEventListener('click', openSidebar);
+  closeBtn.addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+  window.closeSidebar = closeSidebar; // for inline onclick
+
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeLabel = document.getElementById('themeLabel');
+  const rootEl = document.documentElement;
+
+  function applyTheme(theme) {
+    rootEl.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      themeIcon.textContent = '🌙';
+      themeLabel.textContent = 'Dark';
+    } else {
+      themeIcon.textContent = '🌞';
+      themeLabel.textContent = 'Light';
+    }
+    try {
+      localStorage.setItem('linuxTheme', theme);
+    } catch (e) {}
+  }
+
+  // Load stored theme
+  (function () {
+    try {
+      const saved = localStorage.getItem('linuxTheme');
+      if (saved === 'dark' || saved === 'light') {
+        applyTheme(saved);
+      } else {
+        applyTheme('light');
+      }
+    } catch (e) {
+      applyTheme('light');
+    }
+  })();
+
+  themeToggle.addEventListener('click', () => {
+    const current = rootEl.getAttribute('data-theme') || 'light';
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+  });
+</script>
 </body>
 </html>
