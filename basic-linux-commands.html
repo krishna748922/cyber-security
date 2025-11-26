@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Basic Linux Commands - Quick Reference</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Basic Linux commands with examples and explanations for beginners." />
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-alt: #020617;
+      --card: #020617;
+      --border: #1e293b;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius: 14px;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.6),
+        transparent
+      );
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.7rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 20% 20%, #22c55e 0, #16a34a 35%, #14532d 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.7);
+      color: #ecfdf5;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .title-main {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .title-main span {
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .nav-links a {
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-color: rgba(148, 163, 184, 0.55);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.74rem;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.85);
+      margin-bottom: 0.7rem;
+    }
+
+    .k-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.25);
+    }
+
+    h1.hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 34rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.3rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.22rem 0.6rem;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .pill-accent {
+      border-color: rgba(34, 197, 94, 0.7);
+      background: var(--accent-soft);
+      color: #bbf7d0;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-note code {
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.08rem 0.3rem;
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.78rem;
+    }
+
+    .terminal {
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at 0 0, #0f172a 0, #020617 55%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.78rem;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.9rem;
+      background: linear-gradient(to right, #020617, #020617, #064e3b);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+    }
+
+    .dots {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #1f2933;
+    }
+
+    .dot.red { background: #f97373; }
+    .dot.yellow { background: #facc15; }
+    .dot.green { background: #22c55e; }
+
+    .terminal-title {
+      color: #9ca3af;
+      font-size: 0.76rem;
+    }
+
+    .terminal-body {
+      padding: 0.85rem 1rem 1rem;
+    }
+
+    .t-line {
+      display: block;
+      margin-bottom: 0.25rem;
+      white-space: pre;
+    }
+
+    .t-prompt { color: #22c55e; }
+    .t-path { color: #60a5fa; }
+    .t-cmd { color: #e5e7eb; }
+    .t-comment { color: #6b7280; }
+    .t-highlight {
+      display: inline-block;
+      margin-top: 0.35rem;
+      padding: 0.16rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      background: rgba(34, 197, 94, 0.16);
+      color: #bbf7d0;
+    }
+
+    /* Layout sections */
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.4fr);
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1rem 1rem 1.1rem;
+      margin-bottom: 1.1rem;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.8);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .card h3 {
+      font-size: 0.94rem;
+      margin: 0.5rem 0 0.4rem;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      color: var(--muted);
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card ul {
+      list-style: none;
+      font-size: 0.84rem;
+      color: var(--muted);
+      padding-left: 0;
+    }
+
+    .card ul li {
+      margin-bottom: 0.3rem;
+    }
+
+    .card ul li::before {
+      content: "• ";
+      color: var(--accent);
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+      font-size: 0.83rem;
+    }
+
+    thead {
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    th, td {
+      padding: 0.45rem 0.55rem;
+      border-bottom: 1px solid rgba(30, 64, 175, 0.4);
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: #cbd5f5;
+      font-weight: 600;
+      border-bottom-width: 1px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    code {
+      font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.08rem 0.25rem;
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .tip {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.25);
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-inner a {
+      color: var(--muted);
+    }
+
+    .footer-inner a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: 1rem;
+      }
+      .hero-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo">$</div>
+        <div>
+          <div class="title-main">Linux <span>Basics</span> Sheet</div>
+          <div class="tagline">Essential terminal commands for beginners.</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#files" class="active">Files & Folders</a>
+        <a href="#permissions">Permissions</a>
+        <a href="#system">System & Processes</a>
+        <a href="#network">Network</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <div class="kicker">
+            <span class="k-dot"></span>
+            <span>Linux · Terminal · CLI</span>
+          </div>
+          <h1 class="hero-title">
+            Basic <span>Linux commands</span> you must know.
+          </h1>
+          <p class="hero-sub">
+            Use this page as a quick reference while teaching or practising.
+            All commands are safe to try in a lab environment and work on
+            most distributions (Ubuntu, Debian, RHEL, CentOS, Fedora).
+          </p>
+          <div class="hero-pills">
+            <span class="pill pill-accent">Beginner friendly</span>
+            <span class="pill">File system</span>
+            <span class="pill">Permissions</span>
+            <span class="pill">System info</span>
+            <span class="pill">Networking</span>
+          </div>
+          <p class="hero-note">
+            Open terminal and type: <code>clear</code> to clean the screen,  
+            <code>man &lt;command&gt;</code> to read the manual.
+          </p>
+        </div>
+
+        <!-- Terminal preview -->
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="terminal-title">bash — basic-linux-commands.sh</span>
+          </div>
+          <div class="terminal-body">
+            <span class="t-line t-comment"># Example: create a folder, go inside it and list files</span>
+            <span class="t-line">
+              <span class="t-prompt">krishna@linux</span>:<span class="t-path">~</span>$ <span class="t-cmd">mkdir lab && cd lab</span>
+            </span>
+            <span class="t-line">
+              <span class="t-prompt">krishna@linux</span>:<span class="t-path">~/lab</span>$ <span class="t-cmd">touch file1.txt file2.txt</span>
+            </span>
+            <span class="t-line">
+              <span class="t-prompt">krishna@linux</span>:<span class="t-path">~/lab</span>$ <span class="t-cmd">ls -l</span>
+            </span>
+            <span class="t-line t-comment"># View file content</span>
+            <span class="t-line">
+              <span class="t-prompt">krishna@linux</span>:<span class="t-path">~/lab</span>$ <span class="t-cmd">cat file1.txt</span>
+            </span>
+            <span class="t-line t-highlight">
+              Tip: use <code>tab</code> for auto-complete &nbsp;·&nbsp; <code>↑ / ↓</code> to repeat previous commands
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main content -->
+      <section class="content-grid">
+        <!-- Left side: commands -->
+        <div>
+          <!-- Files & Directories -->
+          <article class="card" id="files">
+            <h2>
+              Files & directories
+              <span class="badge">Navigation • Creation • Viewing</span>
+            </h2>
+            <p>These commands help you move around the file system and work with files/folders.</p>
+
+            <table>
+              <thead>
+              <tr>
+                <th style="width:22%;">Command</th>
+                <th style="width:38%;">Example</th>
+                <th>Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><code>pwd</code></td>
+                <td><code>pwd</code></td>
+                <td>Show current working directory.</td>
+              </tr>
+              <tr>
+                <td><code>ls</code></td>
+                <td><code>ls -l</code></td>
+                <td>List files in current directory. <code>-l</code> = long format.</td>
+              </tr>
+              <tr>
+                <td><code>cd</code></td>
+                <td><code>cd /etc</code></td>
+                <td>Change directory to <code>/etc</code>.</td>
+              </tr>
+              <tr>
+                <td><code>cd ..</code></td>
+                <td><code>cd ..</code></td>
+                <td>Go one level up (parent directory).</td>
+              </tr>
+              <tr>
+                <td><code>mkdir</code></td>
+                <td><code>mkdir projects</code></td>
+                <td>Create a new directory <code>projects</code>.</td>
+              </tr>
+              <tr>
+                <td><code>rmdir</code></td>
+                <td><code>rmdir testdir</code></td>
+                <td>Remove empty directory <code>testdir</code>.</td>
+              </tr>
+              <tr>
+                <td><code>rm</code></td>
+                <td><code>rm file.txt</code></td>
+                <td>Delete file <code>file.txt</code>. <strong>Careful!</strong></td>
+              </tr>
+              <tr>
+                <td><code>rm -r</code></td>
+                <td><code>rm -r old_logs</code></td>
+                <td>Delete folder and contents recursively.</td>
+              </tr>
+              <tr>
+                <td><code>cp</code></td>
+                <td><code>cp file1.txt backup.txt</code></td>
+                <td>Copy file from source to destination.</td>
+              </tr>
+              <tr>
+                <td><code>cp -r</code></td>
+                <td><code>cp -r dir1 dir_backup</code></td>
+                <td>Copy directory with all files.</td>
+              </tr>
+              <tr>
+                <td><code>mv</code></td>
+                <td><code>mv old.txt new.txt</code></td>
+                <td>Move or rename a file or directory.</td>
+              </tr>
+              <tr>
+                <td><code>touch</code></td>
+                <td><code>touch notes.txt</code></td>
+                <td>Create an empty file (or update timestamp).</td>
+              </tr>
+              <tr>
+                <td><code>cat</code></td>
+                <td><code>cat file.txt</code></td>
+                <td>Display content of a file on screen.</td>
+              </tr>
+              <tr>
+                <td><code>less</code></td>
+                <td><code>less /etc/passwd</code></td>
+                <td>View file page by page (use <code>q</code> to quit).</td>
+              </tr>
+              <tr>
+                <td><code>head</code></td>
+                <td><code>head -n 10 file.txt</code></td>
+                <td>Show first 10 lines of a file.</td>
+              </tr>
+              <tr>
+                <td><code>tail</code></td>
+                <td><code>tail -f /var/log/messages</code></td>
+                <td>Show last lines of file, <code>-f</code> = follow live updates.</td>
+              </tr>
+              </tbody>
+            </table>
+
+            <p class="tip">
+              <strong>Tip:</strong> Use <code>ls -a</code> to also see hidden files (starting with <code>.</code>).
+            </p>
+          </article>
+
+          <!-- Permissions -->
+          <article class="card" id="permissions">
+            <h2>
+              Permissions & ownership
+              <span class="badge">Security • Access control</span>
+            </h2>
+            <p>Linux uses permissions to control who can read, write or execute files.</p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Command</th>
+                <th>Example</th>
+                <th>Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><code>ls -l</code></td>
+                <td><code>ls -l script.sh</code></td>
+                <td>Show permissions, owner, group and size of file.</td>
+              </tr>
+              <tr>
+                <td><code>chmod</code></td>
+                <td><code>chmod +x script.sh</code></td>
+                <td>Add execute permission to script (make it runnable).</td>
+              </tr>
+              <tr>
+                <td><code>chmod</code></td>
+                <td><code>chmod 755 script.sh</code></td>
+                <td>Set numeric permissions (owner/group/others).</td>
+              </tr>
+              <tr>
+                <td><code>chown</code></td>
+                <td><code>sudo chown user1 file.txt</code></td>
+                <td>Change owner of file to <code>user1</code>.</td>
+              </tr>
+              <tr>
+                <td><code>sudo</code></td>
+                <td><code>sudo mkdir /secure</code></td>
+                <td>Run command with root/administrator privileges.</td>
+              </tr>
+              </tbody>
+            </table>
+
+            <p class="tip">
+              <strong>Remember:</strong> Use <code>sudo</code> only when needed. Wrong commands as root can break the system.
+            </p>
+          </article>
+
+          <!-- System & processes -->
+          <article class="card" id="system">
+            <h2>
+              System, processes & help
+              <span class="badge">Monitoring • Help</span>
+            </h2>
+            <p>Check system information, running processes and get help for commands.</p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Command</th>
+                <th>Example</th>
+                <th>Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><code>whoami</code></td>
+                <td><code>whoami</code></td>
+                <td>Show current logged-in user name.</td>
+              </tr>
+              <tr>
+                <td><code>uname</code></td>
+                <td><code>uname -a</code></td>
+                <td>Show system/kernel information.</td>
+              </tr>
+              <tr>
+                <td><code>df -h</code></td>
+                <td><code>df -h</code></td>
+                <td>Show disk usage of file systems (human-readable).</td>
+              </tr>
+              <tr>
+                <td><code>du -sh</code></td>
+                <td><code>du -sh /var/log</code></td>
+                <td>Show size of a directory.</td>
+              </tr>
+              <tr>
+                <td><code>ps</code></td>
+                <td><code>ps aux</code></td>
+                <td>List running processes.</td>
+              </tr>
+              <tr>
+                <td><code>top</code></td>
+                <td><code>top</code></td>
+                <td>Interactive view of CPU/memory usage (press <code>q</code> to quit).</td>
+              </tr>
+              <tr>
+                <td><code>free -h</code></td>
+                <td><code>free -h</code></td>
+                <td>Show memory (RAM) usage.</td>
+              </tr>
+              <tr>
+                <td><code>history</code></td>
+                <td><code>history | tail</code></td>
+                <td>Show list of previously used commands.</td>
+              </tr>
+              <tr>
+                <td><code>clear</code></td>
+                <td><code>clear</code></td>
+                <td>Clear terminal screen.</td>
+              </tr>
+              <tr>
+                <td><code>man</code></td>
+                <td><code>man ls</code></td>
+                <td>Show manual/help page of a command (press <code>q</code> to quit).</td>
+              </tr>
+              <tr>
+                <td><code>shutdown</code></td>
+                <td><code>sudo shutdown -h now</code></td>
+                <td>Shutdown the system immediately.</td>
+              </tr>
+              <tr>
+                <td><code>reboot</code></td>
+                <td><code>sudo reboot</code></td>
+                <td>Restart the system.</td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+
+        <!-- Right side: extra tips -->
+        <aside>
+          <article class="card" id="network">
+            <h2>
+              Basic networking commands
+              <span class="badge">Check connectivity</span>
+            </h2>
+            <table>
+              <thead>
+              <tr>
+                <th>Command</th>
+                <th>Example</th>
+                <th>Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><code>ip</code></td>
+                <td><code>ip a</code></td>
+                <td>Show IP addresses of interfaces.</td>
+              </tr>
+              <tr>
+                <td><code>ping</code></td>
+                <td><code>ping google.com</code></td>
+                <td>Check network connectivity to a host.</td>
+              </tr>
+              <tr>
+                <td><code>curl</code></td>
+                <td><code>curl http://example.com</code></td>
+                <td>Fetch URL content from terminal.</td>
+              </tr>
+              <tr>
+                <td><code>wget</code></td>
+                <td><code>wget http://file.iso</code></td>
+                <td>Download files from the internet.</td>
+              </tr>
+              <tr>
+                <td><code>ss</code></td>
+                <td><code>ss -tulpn</code></td>
+                <td>Show listening ports and sockets.</td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="card">
+            <h2>Search & archive commands</h2>
+            <table>
+              <thead>
+              <tr>
+                <th>Command</th>
+                <th>Example</th>
+                <th>Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><code>grep</code></td>
+                <td><code>grep "error" logfile</code></td>
+                <td>Search for text “error” in a file.</td>
+              </tr>
+              <tr>
+                <td><code>find</code></td>
+                <td><code>find /var -name "*.log"</code></td>
+                <td>Find files by name/path.</td>
+              </tr>
+              <tr>
+                <td><code>tar</code></td>
+                <td><code>tar -czvf backup.tar.gz /home/user</code></td>
+                <td>Create compressed archive of a folder.</td>
+              </tr>
+              <tr>
+                <td><code>tar</code></td>
+                <td><code>tar -xzvf backup.tar.gz</code></td>
+                <td>Extract compressed archive.</td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="card">
+            <h2>Package management (examples)</h2>
+            <p>Depends on Linux distribution:</p>
+            <ul>
+              <li><code>sudo apt update</code> — update package list (Ubuntu/Debian)</li>
+              <li><code>sudo apt install nano</code> — install a package</li>
+              <li><code>sudo dnf install httpd</code> — install on RHEL 9 / Fedora</li>
+              <li><code>sudo yum install httpd</code> — older RHEL/CentOS</li>
+            </ul>
+            <p class="tip">
+              For training, ask students to install simple tools like
+              <code>htop</code> or <code>tree</code> and then use them.
+            </p>
+          </article>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 Linux Basics Sheet · You learn Linux by using the terminal.</span>
+      <span>
+        Edit this page for your institute:
+        <a href="#">Add your logo / name here</a>
+      </span>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
