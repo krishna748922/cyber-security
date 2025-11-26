@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MS 365 & Outlook Syllabus – User & Support Training</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MS 365 and Outlook syllabus: Office apps, Teams, OneDrive, SharePoint, Outlook mail, calendar, configuration, troubleshooting and interview preparation." />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #ffffff;
+      --card: #ffffff;
+      --border: #d0d7e2;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.09);
+      --accent-strong: #1d4ed8;
+      --text: #0f172a;
+      --muted: #6b7280;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius: 14px;
+      --shadow-soft: 0 14px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: radial-gradient(circle at top, #e0ebff 0, #f5f7fb 40%, #edf1f9 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(245, 247, 251, 0.96);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.7rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: radial-gradient(circle at 20% 20%, #60a5fa 0, #2563eb 40%, #1d4ed8 85%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.45);
+      color: #eff6ff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .title-main {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .title-main span {
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .nav-links a {
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-color: rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .menu-icon {
+      width: 18px;
+      height: 2px;
+      background: #111827;
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .menu-icon::before,
+    .menu-icon::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 2px;
+      background: #111827;
+      border-radius: 999px;
+      left: 0;
+    }
+
+    .menu-icon::before {
+      top: -5px;
+    }
+
+    .menu-icon::after {
+      top: 5px;
+    }
+
+    /* Sidebar Mobile */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+      display: none;
+      z-index: 40;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 240px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -12px 0 30px rgba(15, 23, 42, 0.25);
+      padding: 1.2rem 1rem;
+      transition: right 0.22s ease-out;
+      z-index: 41;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .sidebar-close {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-links a {
+      padding: 0.4rem 0.2rem;
+      border-radius: 8px;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .sidebar-links a:hover {
+      background: #f3f4f6;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.74rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.7rem;
+    }
+
+    .k-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+    }
+
+    h1.hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 0.96rem;
+      max-width: 34rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      padding: 0.18rem 0.6rem;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .pill-accent {
+      border-color: rgba(37, 99, 235, 0.9);
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+    }
+
+    .hero-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .hero-note strong {
+      color: var(--accent-strong);
+    }
+
+    .hero-note code {
+      background: #eef2ff;
+      padding: 0.1rem 0.3rem;
+      border-radius: 6px;
+      border: 1px solid rgba(129, 140, 248, 0.6);
+      font-size: 0.8rem;
+    }
+
+    /* Right hero card */
+    .hero-card {
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #ffffff, #e0ecff);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 1rem 1.2rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card ul {
+      margin-left: 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .hero-card li {
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-card-badge {
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card-badge span {
+      font-size: 0.9rem;
+    }
+
+    /* Main layout */
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.3fr);
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1rem 1rem 1.1rem;
+      margin-bottom: 1.1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h2 {
+      font-size: 1.02rem;
+      margin-bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      color: var(--muted);
+      background: #f9fafb;
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card small {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+      font-size: 0.83rem;
+    }
+
+    thead {
+      background: #e5ecff;
+    }
+
+    th, td {
+      padding: 0.45rem 0.55rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.6);
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+      color: #111827;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    .module-label {
+      font-weight: 600;
+      color: var(--accent-strong);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .topic-list {
+      margin: 0;
+      padding-left: 1rem;
+      color: var(--muted);
+    }
+
+    .topic-list li {
+      margin-bottom: 0.18rem;
+    }
+
+    .level-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      border-radius: 999px;
+      padding: 0.12rem 0.55rem;
+      background: #eff6ff;
+      color: var(--accent-strong);
+      font-size: 0.76rem;
+      border: 1px solid rgba(37, 99, 235, 0.45);
+    }
+
+    .level-pill.adv {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+
+    .level-pill.int {
+      background: #ecfdf5;
+      border-color: #22c55e;
+      color: #166534;
+    }
+
+    .tip {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .tip strong {
+      color: var(--accent-strong);
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.5);
+      margin-top: auto;
+      background: #f9fafb;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-inner a {
+      color: var(--muted);
+    }
+
+    .footer-inner a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+      .menu-btn {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: 1rem;
+      }
+      .hero-title {
+        font-size: 1.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- Mobile sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">MS 365 & Outlook Menu</div>
+      <button class="sidebar-close" type="button" id="sidebarCloseBtn">&times;</button>
+    </div>
+    <nav class="sidebar-links">
+      <a href="#module1" onclick="closeSidebar()">Module 1 – MS 365 Basics</a>
+      <a href="#module2" onclick="closeSidebar()">Module 2 – Word & Excel</a>
+      <a href="#module3" onclick="closeSidebar()">Module 3 – PowerPoint & OneNote</a>
+      <a href="#module4" onclick="closeSidebar()">Module 4 – OneDrive & SharePoint</a>
+      <a href="#module5" onclick="closeSidebar()">Module 5 – Teams</a>
+      <a href="#module6" onclick="closeSidebar()">Module 6 – Outlook Mail</a>
+      <a href="#module7" onclick="closeSidebar()">Module 7 – Calendar & Meetings</a>
+      <a href="#module8" onclick="closeSidebar()">Module 8 – Security & Troubleshooting</a>
+    </nav>
+    <div class="sidebar-footer">
+      Designed for MS 365 user training and helpdesk / support roles.
+    </div>
+  </aside>
+
+  <!-- Top nav -->
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo">M</div>
+        <div>
+          <div class="title-main">MS 365 & <span>Outlook</span> Syllabus</div>
+          <div class="tagline">Office apps, cloud storage, collaboration, mail & calendar.</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#module1" class="active">Overview</a>
+          <a href="#module2">Word & Excel</a>
+          <a href="#module4">OneDrive</a>
+          <a href="#module5">Teams</a>
+          <a href="#module6">Outlook</a>
+          <a href="#module8">Troubleshooting</a>
+        </div>
+        <button class="menu-btn" type="button" id="menuBtn">
+          <div class="menu-icon"></div>
+          <span>Menu</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <div class="kicker">
+            <span class="k-dot"></span>
+            <span>MS 365 · Word · Excel · PowerPoint · Teams · Outlook</span>
+          </div>
+          <h1 class="hero-title">
+            Complete <span>MS 365 & Outlook</span> syllabus for training.
+          </h1>
+          <p class="hero-sub">
+            Use this page as a syllabus for corporate batches, institute courses or
+            self-study. It covers MS 365 basics, Word, Excel, PowerPoint, OneDrive,
+            SharePoint, Teams, Outlook mail and calendar, security, best practices
+            and troubleshooting for helpdesk roles.
+          </p>
+          <div class="hero-pills">
+            <span class="pill pill-accent">Beginner → Advanced user</span>
+            <span class="pill">Office productivity</span>
+            <span class="pill">Collaboration & cloud</span>
+            <span class="pill">Email & calendar</span>
+          </div>
+          <p class="hero-note">
+            <strong>Trainer tip:</strong> Print this page as PDF
+            (<code>Ctrl + P</code>) and share as course syllabus for your MS 365 batch.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-badge">
+            <span>📦</span> Course Overview
+          </div>
+          <h2>Course duration & structure</h2>
+          <ul>
+            <li><strong>Duration:</strong> 30–45 days (regular) / 6–8 weekends</li>
+            <li><strong>Target:</strong> Students, office staff, L1 support engineers</li>
+            <li><strong>Focus:</strong> Real office workflows using MS 365 and Outlook</li>
+            <li><strong>Practice:</strong> Daily tasks, mini projects and ticket scenarios</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Main syllabus -->
+      <section class="content-grid">
+        <!-- Left: main modules -->
+        <div>
+          <!-- Module 1 -->
+          <article class="card" id="module1">
+            <h2>
+              Module 1: MS 365 Overview & Account Basics
+              <span class="badge">Foundation</span>
+            </h2>
+            <p>
+              Understand MS 365 as a cloud-based productivity suite, licensing types
+              and how users sign in, manage profiles and use the launcher.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th style="width:25%;">Module</th>
+                <th>Topics</th>
+                <th style="width:20%;">Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">1.1 What is MS 365</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Concept of cloud-based productivity</li>
+                    <li>Components: Office apps, email, storage, collaboration</li>
+                    <li>Subscription and licensing overview</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">1.2 Sign-in & profiles</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>MS account vs organizational account</li>
+                    <li>Sign-in, sign-out and basic profile settings</li>
+                    <li>Language, time zone and display options</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">1.3 MS 365 home & app launcher</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Finding apps from the launcher</li>
+                    <li>Recent documents and recommended items</li>
+                    <li>Switching between desktop and online versions</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 2 -->
+          <article class="card" id="module2">
+            <h2>
+              Module 2: Word & Excel Essentials
+              <span class="badge">Office Apps</span>
+            </h2>
+            <p>
+              Learn core features of Word and Excel used in daily office work,
+              plus collaboration features using MS 365.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">2.1 Word basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Interface: ribbon, quick access, status bar</li>
+                    <li>Creating, saving and printing documents</li>
+                    <li>Formatting text, paragraphs and pages</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.2 Word for reports</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Styles, headings and table of contents</li>
+                    <li>Page numbering, headers and footers</li>
+                    <li>Spell check, track changes and comments</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.3 Excel basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Workbook, worksheet, rows and columns</li>
+                    <li>Data entry, autofill and basic formatting</li>
+                    <li>Basic formulas: sum, average, minimum, maximum</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">2.4 Excel for analysis</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Cell referencing and simple logical formulas</li>
+                    <li>Sorting, filtering and table formatting</li>
+                    <li>Basic charts and printing settings</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+            <p class="tip">
+              <strong>Lab idea:</strong> Create a formatted letter in Word and a small
+              sales report in Excel, then share both with another user to review.
+            </p>
+          </article>
+
+          <!-- Module 3 -->
+          <article class="card" id="module3">
+            <h2>
+              Module 3: PowerPoint & OneNote
+              <span class="badge">Presentation</span>
+            </h2>
+            <p>
+              Build professional presentations, manage notes and use MS 365
+              features for collaboration and sharing.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">3.1 PowerPoint basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Slides, layouts and themes</li>
+                    <li>Text boxes, images, shapes and icons</li>
+                    <li>Slide show view and basic animations</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.2 Effective presentations</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Slide master and templates</li>
+                    <li>Transitions, animation best practices</li>
+                    <li>Presenter view and printing handouts</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">3.3 OneNote essentials</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Notebooks, sections and pages</li>
+                    <li>Typed notes, ink notes, tags and to-do lists</li>
+                    <li>Search and linking notes to meetings</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 4 -->
+          <article class="card" id="module4">
+            <h2>
+              Module 4: OneDrive & SharePoint Basics
+              <span class="badge">Cloud Storage</span>
+            </h2>
+            <p>
+              Store files in the cloud, share with colleagues and understand
+              the difference between personal and team storage.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">4.1 OneDrive basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Personal cloud storage concept</li>
+                    <li>Upload, download, move and rename files</li>
+                    <li>Recycle bin and version history</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">4.2 Sharing & collaboration</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Sharing files and folders with others</li>
+                    <li>View, edit and block download options</li>
+                    <li>Co-authoring documents in real time</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">4.3 SharePoint team sites</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Difference between OneDrive and team sites</li>
+                    <li>Document libraries and site navigation</li>
+                    <li>Basic permissions and access requests</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+
+        <!-- Right: Teams, Outlook, security & troubleshooting -->
+        <aside>
+          <!-- Module 5 -->
+          <article class="card" id="module5">
+            <h2>
+              Module 5: Teams for Chat, Meetings & Collaboration
+              <span class="badge">Collaboration</span>
+            </h2>
+            <p>
+              Use Teams for chat, channels, online meetings and basic
+              collaboration with files and apps.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">5.1 Teams basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Interface overview: activity, chat, teams, calendar</li>
+                    <li>Creating and managing teams and channels</li>
+                    <li>Channel posts, mentions and reactions</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">5.2 Chat & meetings</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>One-to-one and group chat</li>
+                    <li>Scheduling and joining meetings</li>
+                    <li>Screen sharing, recording and meeting notes</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">5.3 Files & apps in Teams</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Sharing files in channels and chats</li>
+                    <li>Working with Word, Excel, PowerPoint inside Teams</li>
+                    <li>Adding useful tabs such as planner or notes</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 6 -->
+          <article class="card" id="module6">
+            <h2>
+              Module 6: Outlook Mail – Desktop & Online
+              <span class="badge">Email</span>
+            </h2>
+            <p>
+              Learn to use Outlook for sending, receiving and organizing mail,
+              both on desktop and in the browser version.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">6.1 Outlook interface</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Mail pane, folder list, reading pane</li>
+                    <li>Focused vs other inbox idea</li>
+                    <li>Navigation between mail, calendar, people and tasks</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">6.2 Sending & organizing mail</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Compose, reply, reply all and forward</li>
+                    <li>Attachments, signatures, mail formatting</li>
+                    <li>Folders, categories, flags and rules</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">6.3 Mailbox cleanliness</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Search and filters in Outlook</li>
+                    <li>Archive and junk mail handling</li>
+                    <li>Cleanup tools and storage management basics</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 7 -->
+          <article class="card" id="module7">
+            <h2>
+              Module 7: Outlook Calendar, Meetings & People
+              <span class="badge">Time Management</span>
+            </h2>
+            <p>
+              Manage appointments, meetings and contacts using Outlook with
+              MS 365 integration and Teams support.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">7.1 Calendar basics</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Creating appointments and events</li>
+                    <li>Viewing day, week and month layouts</li>
+                    <li>Multiple calendars and color coding</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">7.2 Meetings & scheduling</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Scheduling meetings and inviting attendees</li>
+                    <li>Checking availability and basic resources idea</li>
+                    <li>Online meetings with Teams from Outlook</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">7.3 Contacts & tasks</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Adding and editing contacts</li>
+                    <li>Contact groups for mailing lists</li>
+                    <li>Basic task list and reminders usage</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <!-- Module 8 -->
+          <article class="card" id="module8">
+            <h2>
+              Module 8: Security, Best Practices & Troubleshooting
+              <span class="badge">Support Skills</span>
+            </h2>
+            <p>
+              Apply safe usage, handle common issues and prepare for interview
+              questions related to MS 365 and Outlook support.
+            </p>
+
+            <table>
+              <thead>
+              <tr>
+                <th>Module</th>
+                <th>Topics</th>
+                <th>Level</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><span class="module-label">8.1 Security & safe usage</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Strong passwords and multifactor concept</li>
+                    <li>Recognizing suspicious mail and attachments</li>
+                    <li>Data loss prevention basics from user side</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill">Beginner</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">8.2 Common Outlook issues</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Mail not sending or receiving</li>
+                    <li>Search not working, profile corruption (concept)</li>
+                    <li>Mailbox full and performance problems</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              <tr>
+                <td><span class="module-label">8.3 Interview & ticket scenarios</span></td>
+                <td>
+                  <ul class="topic-list">
+                    <li>Explain difference between OneDrive and SharePoint storage</li>
+                    <li>How to handle “mailbox full” or “mail stuck in outbox”</li>
+                    <li>How to schedule and reschedule meetings using Outlook</li>
+                  </ul>
+                </td>
+                <td><span class="level-pill int">Intermediate</span></td>
+              </tr>
+              </tbody>
+            </table>
+            <p class="tip">
+              <strong>Trainer tip:</strong> Convert each topic into a practical ticket,
+              such as “user cannot see shared calendar” or “Teams meeting link missing”
+              and let students troubleshoot step-by-step.
+            </p>
+          </article>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 MS 365 & Outlook Syllabus · Customize this page with your institute logo.</span>
+      <span>Trainer: Add your institute name, batch timing & contact info here.</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+
+  function openSidebar() {
+    sidebar.style.right = '0';
+    overlay.style.display = 'block';
+  }
+
+  function closeSidebar() {
+    sidebar.style.right = '-260px';
+    overlay.style.display = 'none';
+  }
+
+  if (menuBtn) menuBtn.addEventListener('click', openSidebar);
+  if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+  if (overlay) overlay.addEventListener('click', closeSidebar);
+
+  // Expose for inline onclick
+  window.closeSidebar = closeSidebar;
+</script>
+</body>
+</html>
