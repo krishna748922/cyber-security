@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linux Bash Scripting Blog</title>
+  <meta name="description" content="Learn Linux Bash scripting from basics to advanced with practical examples and real-world use cases." />
+  <style>
+    /* ---------- Base Styles ---------- */
+    :root {
+      --bg: #0f172a;
+      --bg-alt: #020617;
+      --card-bg: #020617;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.15);
+      --border-soft: rgba(148, 163, 184, 0.35);
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --danger: #f97373;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.85);
+      --shadow-subtle: 0 10px 25px rgba(15, 23, 42, 0.65);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ---------- Layout ---------- */
+
+    .page-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    /* ---------- Header / Nav ---------- */
+
+    header {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.92),
+        rgba(15, 23, 42, 0.85),
+        rgba(15, 23, 42, 0.0)
+      );
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 1.25rem 0.9rem;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 20% 20%, #22c55e 0, #16a34a 35%, #14532d 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-logo::after {
+      content: "$";
+      font-size: 18px;
+      font-weight: 700;
+      color: #ecfdf5;
+      transform: translateY(2px);
+    }
+
+    .brand-text-main {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .brand-text-main span.accent {
+      color: var(--accent);
+    }
+
+    .brand-tagline {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.85rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.16s ease-out;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: var(--text);
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .nav-cta {
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #22c55e, #4ade80);
+      color: #052e16;
+      font-weight: 600;
+      font-size: 0.82rem;
+      box-shadow: 0 12px 35px rgba(34, 197, 94, 0.55);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(34, 197, 94, 0.7);
+    }
+
+    .nav-cta span.icon {
+      font-size: 1rem;
+    }
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.6fr);
+      gap: 2.5rem;
+      margin-top: 2.3rem;
+      margin-bottom: 2.2rem;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .hero-kicker-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.25);
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3.1vw, 2.8rem);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title span.accent {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 34rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.65);
+    }
+
+    .hero-meta span.badge-pro {
+      border-color: rgba(34, 197, 94, 0.6);
+      background: rgba(22, 163, 74, 0.1);
+      color: #bbf7d0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.88rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+      transition: all 0.14s ease-out;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 10% 0, #bbf7d0 0, #22c55e 35%, #15803d 90%);
+      color: #022c22;
+      box-shadow: 0 18px 45px rgba(22, 163, 74, 0.7);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 60px rgba(22, 163, 74, 0.85);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-muted);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(148, 163, 184, 0.9);
+      color: var(--text);
+      transform: translateY(-1px);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .hero-terminal {
+      border-radius: 20px;
+      background: radial-gradient(circle at 0 0, #15803d 0, #020617 45%);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.9rem;
+      background: linear-gradient(to right, #020617, #020617, #064e3b);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+    }
+
+    .dots {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .dot.red {
+      background: #f97373;
+    }
+
+    .dot.yellow {
+      background: #facc15;
+    }
+
+    .dot.green {
+      background: #22c55e;
+    }
+
+    .terminal-title {
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    .terminal-body {
+      padding: 1rem;
+      font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.76rem;
+      background: radial-gradient(circle at top left, #064e3b 0, #020617 50%);
+    }
+
+    .terminal-line {
+      display: block;
+      margin-bottom: 0.3rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .terminal-line .prompt {
+      color: #22c55e;
+    }
+
+    .terminal-line .path {
+      color: #60a5fa;
+    }
+
+    .terminal-line .cmd {
+      color: #e5e7eb;
+    }
+
+    .terminal-line.comment {
+      color: #6b7280;
+    }
+
+    .terminal-highlight {
+      display: inline-block;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.16);
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      color: #bbf7d0;
+      margin-top: 0.2rem;
+    }
+
+    /* ---------- Main Content ---------- */
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.4fr);
+      gap: 2rem;
+    }
+
+    .section-heading {
+      font-size: 1.15rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-heading small {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.16rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+    }
+
+    /* ---------- Post List ---------- */
+
+    .posts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .post-card {
+      background: radial-gradient(circle at top left, #020617 0, #020617 55%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow-subtle);
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
+        border-color 0.12s ease-out, background 0.12s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.14), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.18s ease-out;
+      pointer-events: none;
+    }
+
+    .post-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.95);
+      border-color: rgba(148, 163, 184, 0.75);
+    }
+
+    .post-card:hover::before {
+      opacity: 1;
+    }
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .post-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .post-meta .tag {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.7rem;
+    }
+
+    .post-title {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .post-title a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .post-title a:hover {
+      color: var(--accent);
+    }
+
+    .post-excerpt {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .post-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      font-size: 0.78rem;
+    }
+
+    .post-footer-left {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--text-muted);
+    }
+
+    .read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .read-link span.arrow {
+      font-size: 0.9rem;
+      transform: translateY(0.5px);
+    }
+
+    /* ---------- Sidebar ---------- */
+
+    .sidebar-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), #020617);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-subtle);
+      padding: 1rem 1rem 1.15rem;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.98rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .sidebar-subtitle {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .pill-accent {
+      border-color: rgba(34, 197, 94, 0.7);
+      background: rgba(22, 163, 74, 0.16);
+      color: #bbf7d0;
+    }
+
+    .checklist {
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .checkmark {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-top: 0.1rem;
+    }
+
+    .newsletter-input {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .newsletter-input input {
+      flex: 1;
+      padding: 0.45rem 0.6rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #020617;
+      color: var(--text);
+      font-size: 0.8rem;
+    }
+
+    .newsletter-input input::placeholder {
+      color: #6b7280;
+    }
+
+    .newsletter-input button {
+      padding: 0.45rem 0.8rem;
+      border-radius: 10px;
+      border: none;
+      background: #22c55e;
+      color: #022c22;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.65);
+      white-space: nowrap;
+    }
+
+    .tip-box {
+      margin-top: 0.4rem;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .tip-box strong {
+      color: var(--accent);
+    }
+
+    .sidebar-section {
+      margin-top: 0.7rem;
+    }
+
+    .mini-list {
+      list-style: none;
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      color: var(--text-muted);
+    }
+
+    .mini-list a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .mini-list a:hover {
+      color: var(--accent);
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.25);
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.2rem 1.25rem 1.6rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ---------- Responsive ---------- */
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-terminal {
+        order: -1;
+      }
+
+      .main-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: 1rem;
+      }
+
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-meta {
+        gap: 0.4rem;
+      }
+
+      .post-card {
+        padding-inline: 0.8rem;
+      }
+
+      .newsletter-input {
+        flex-direction: column;
+      }
+
+      .newsletter-input button {
+        width: 100%;
+        justify-content: center;
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <!-- ===== Header / Nav ===== -->
+    <header>
+      <nav class="nav">
+        <div class="brand">
+          <div class="brand-logo"></div>
+          <div>
+            <div class="brand-text-main">
+              Linux <span class="accent">Bash</span> Lab
+            </div>
+            <div class="brand-tagline">Scripts, automation & shell mastery.</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#" class="is-active">Blog</a>
+          <a href="#cheatsheets">Cheat Sheets</a>
+          <a href="#projects">Mini Projects</a>
+          <a href="#about">About</a>
+        </div>
+        <button class="nav-cta" type="button">
+          <span class="icon">▶</span>
+          Run your first script
+        </button>
+      </nav>
+    </header>
+
+    <!-- ===== Main Content ===== -->
+    <main class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <div class="hero-kicker">
+            <span class="hero-kicker-dot"></span>
+            <span>Linux · Bash · Scripting</span>
+          </div>
+          <h1 class="hero-title">
+            Master <span class="accent">Bash scripting</span> with practical Linux examples.
+          </h1>
+          <p class="hero-subtitle">
+            This blog walks you from <strong>basic commands</strong> to
+            <strong>automated backup scripts</strong>, log analyzers, user management,
+            and real-world DevOps shell tasks.
+          </p>
+          <div class="hero-meta">
+            <span class="badge-pro">Beginner → Advanced path</span>
+            <span>⏱ New posts weekly</span>
+            <span>💻 Tested on Ubuntu, RHEL, CentOS</span>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button">
+              Start with “Hello Script”
+              <span>→</span>
+            </button>
+            <button class="btn btn-ghost" type="button">
+              View Bash basics series
+            </button>
+          </div>
+        </div>
+
+        <!-- Right side: Fancy terminal preview -->
+        <div class="hero-terminal">
+          <div class="terminal-header">
+            <div class="dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="terminal-title">bash — linux-bash-blog.sh</div>
+          </div>
+          <div class="terminal-body">
+            <span class="terminal-line comment">
+              # Simple Bash script: backup /var/log to ~/log-backup
+            </span>
+            <span class="terminal-line">
+              <span class="prompt">krishna@lab</span>:<span class="path">~/scripts</span>$ <span class="cmd">cat backup_logs.sh</span>
+            </span>
+            <span class="terminal-line">
+              <span class="cmd">#!/bin/bash</span>
+            </span>
+            <span class="terminal-line">
+              <span class="cmd">BACKUP_DIR="$HOME/log-backup/$(date +%F)"</span>
+            </span>
+            <span class="terminal-line">
+              <span class="cmd">mkdir -p "$BACKUP_DIR"</span>
+            </span>
+            <span class="terminal-line">
+              <span class="cmd">cp -r /var/log/* "$BACKUP_DIR" 2&gt;/dev/null</span>
+            </span>
+            <span class="terminal-line">
+              <span class="cmd">echo "Logs backed up to $BACKUP_DIR"</span>
+            </span>
+
+            <span class="terminal-line" style="margin-top: 0.5rem;">
+              <span class="prompt">krishna@lab</span>:<span class="path">~/scripts</span>$ <span class="cmd">chmod +x backup_logs.sh &amp;&amp; ./backup_logs.sh</span>
+            </span>
+            <span class="terminal-line terminal-highlight">
+              ✅ Logs backed up. Automate with: <code>crontab -e</code>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main grid: posts + sidebar -->
+      <section class="main-grid">
+        <!-- ===== Blog Posts ===== -->
+        <div>
+          <div class="section-heading">
+            <span>Latest Bash scripting posts</span>
+            <span class="badge">Practical tutorials</span>
+          </div>
+
+          <div class="posts-list">
+            <!-- Post 1 -->
+            <article class="post-card">
+              <div class="post-meta">
+                <span>📅 26 Nov 2025</span>
+                <span>⏱ 8 min read</span>
+                <span class="tag">Bash Basics</span>
+              </div>
+              <h2 class="post-title">
+                <a href="#">
+                  Bash 101: Writing Your First Script (Shebang, chmod, execution)
+                </a>
+              </h2>
+              <p class="post-excerpt">
+                New to Bash scripting? Learn how to create a simple
+                <code>hello.sh</code> script, make it executable with <code>chmod +x</code>
+                and understand the role of the shebang (<code>#!/bin/bash</code>) on Linux systems.
+              </p>
+              <div class="post-footer">
+                <div class="post-footer-left">
+                  <span>👤 Admin</span>
+                  <span>•</span>
+                  <span>Beginner friendly</span>
+                </div>
+                <a class="read-link" href="#">
+                  Read tutorial <span class="arrow">→</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Post 2 -->
+            <article class="post-card">
+              <div class="post-meta">
+                <span>📅 20 Nov 2025</span>
+                <span>⏱ 10 min read</span>
+                <span class="tag">Conditions & Loops</span>
+              </div>
+              <h2 class="post-title">
+                <a href="#">
+                  If, For, While: Controlling Flow in Bash Scripts
+                </a>
+              </h2>
+              <p class="post-excerpt">
+                Learn how <code>if</code>, <code>elif</code>, <code>else</code> and loops
+                (<code>for</code>, <code>while</code>) can turn basic commands into powerful
+                automation — including examples for checking services, pinging hosts and
+                monitoring disk usage.
+              </p>
+              <div class="post-footer">
+                <div class="post-footer-left">
+                  <span>👤 Admin</span>
+                  <span>•</span>
+                  <span>Intermediate</span>
+                </div>
+                <a class="read-link" href="#">
+                  Read tutorial <span class="arrow">→</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Post 3 -->
+            <article class="post-card">
+              <div class="post-meta">
+                <span>📅 12 Nov 2025</span>
+                <span>⏱ 12 min read</span>
+                <span class="tag">User Management</span>
+              </div>
+              <h2 class="post-title">
+                <a href="#">
+                  Automating User Creation with Bash on RHEL / Ubuntu
+                </a>
+              </h2>
+              <p class="post-excerpt">
+                A complete script to bulk-create Linux users from a file, set default passwords,
+                force password change on first login and generate a report — ideal for labs,
+                training institutes and corporate environments.
+              </p>
+              <div class="post-footer">
+                <div class="post-footer-left">
+                  <span>👤 Admin</span>
+                  <span>•</span>
+                  <span>Sysadmin & Training</span>
+                </div>
+                <a class="read-link" href="#">
+                  Read tutorial <span class="arrow">→</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Post 4 -->
+            <article class="post-card">
+              <div class="post-meta">
+                <span>📅 03 Nov 2025</span>
+                <span>⏱ 9 min read</span>
+                <span class="tag">Backups</span>
+              </div>
+              <h2 class="post-title">
+                <a href="#">
+                  Daily Backup Script with tar, gzip and crontab
+                </a>
+              </h2>
+              <p class="post-excerpt">
+                Create a reliable backup script for important directories (like
+                <code>/etc</code> and <code>/var/www</code>), compress them with
+                <code>tar</code> and <code>gzip</code>, and schedule automatic runs using
+                <code>crontab</code>.
+              </p>
+              <div class="post-footer">
+                <div class="post-footer-left">
+                  <span>👤 Admin</span>
+                  <span>•</span>
+                  <span>DevOps habit</span>
+                </div>
+                <a class="read-link" href="#">
+                  Read tutorial <span class="arrow">→</span>
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ===== Sidebar ===== -->
+        <aside>
+          <!-- Sidebar card: Quick start -->
+          <div class="sidebar-card" id="cheatsheets">
+            <h3 class="sidebar-title">Bash quick start</h3>
+            <p class="sidebar-subtitle">
+              New to Linux? Start with these fundamentals before jumping into big scripts.
+            </p>
+            <ul class="checklist">
+              <li>
+                <span class="checkmark">✔</span>
+                <span>Run commands, pipes and redirects (<code>&gt;</code>, <code>&gt;&gt;</code>, <code>|</code>)</span>
+              </li>
+              <li>
+                <span class="checkmark">✔</span>
+                <span>Understand file permissions (<code>chmod</code>, <code>chown</code>)</span>
+              </li>
+              <li>
+                <span class="checkmark">✔</span>
+                <span>Variables, arguments (<code>$1</code>, <code>$@</code>) and exit codes (<code>$?</code>)</span>
+              </li>
+            </ul>
+            <div class="pill-list">
+              <span class="pill pill-accent">Bash basics</span>
+              <span class="pill">File system</span>
+              <span class="pill">Permissions</span>
+              <span class="pill">Loops</span>
+              <span class="pill">Functions</span>
+            </div>
+          </div>
+
+          <!-- Sidebar card: Newsletter -->
+          <div class="sidebar-card">
+            <h3 class="sidebar-title">Get scripts in your inbox</h3>
+            <p class="sidebar-subtitle">
+              One concise email with a practical Bash script and explanation.
+            </p>
+            <div class="newsletter-input">
+              <input type="email" placeholder="yourname@example.com" />
+              <button type="button">Subscribe</button>
+            </div>
+            <p class="tip-box">
+              <strong>Tip:</strong> You can replace this box with your own Google Form,
+              Mailchimp or simple contact form.
+            </p>
+          </div>
+
+          <!-- Sidebar card: Useful links -->
+          <div class="sidebar-card" id="projects">
+            <h3 class="sidebar-title">Mini Bash projects</h3>
+            <div class="sidebar-section">
+              <ul class="mini-list">
+                <li><a href="#">✅ System health check script</a></li>
+                <li><a href="#">📦 LAMP stack installer (Ubuntu)</a></li>
+                <li><a href="#">🔐 Basic log monitor for SSH failures</a></li>
+                <li><a href="#">📁 Folder size report with human-readable output</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sidebar-card" id="about">
+            <h3 class="sidebar-title">About this blog</h3>
+            <p class="sidebar-subtitle">
+              Created for students and professionals who want to practice Linux and
+              Bash scripting with real, hands-on tasks.
+            </p>
+            <ul class="mini-list">
+              <li>👨‍🏫 Great for lab environments & coaching institutes.</li>
+              <li>🎯 Focus on automation, repeatable tasks and sysadmin skills.</li>
+              <li>🧪 Every script is tested on common Linux distributions.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+      <div class="footer-inner">
+        <span>© 2025 Linux Bash Lab · Learn by scripting, not just reading.</span>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#cheatsheets">Cheat sheets</a>
+          <a href="#projects">Projects</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
