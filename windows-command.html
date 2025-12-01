@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Windows Commands Reference</title>
+  <style>
+    :root{
+      --bg:#0f1720;--bg-grad-1:#061021;--bg-grad-2:#071428;--card:#0b1220;--accent:#0078d7;--muted:#9aa4b2;--text:#e6eef8;--border:rgba(255,255,255,0.04)
+    }
+    [data-theme="light"]{
+      --bg:#f6f8fb;--bg-grad-1:#f9fbff;--bg-grad-2:#eef3ff;--card:#ffffff;--accent:#2563eb;--muted:#5b6472;--text:#0b1220;--border:rgba(0,0,0,0.08)
+    }
+    html,body{color:var(--text);font-family:Segoe UI, Roboto, system-ui, -apple-system, Arial}
+    body{margin:0;background:linear-gradient(180deg,var(--bg-grad-1),var(--bg-grad-2));min-height:100vh;padding:20px}
+    .wrap{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px}
+    h1{margin:0;font-size:20px}
+    .search{flex:1}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));padding:14px;border-radius:10px;box-shadow:0 6px 20px rgba(2,6,23,0.35)}
+    [data-theme="light"] .card{background:var(--card);box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+    .commands{max-height:68vh;overflow:auto}
+    .cmd{display:flex;justify-content:space-between;align-items:flex-start;padding:10px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px}
+    .cmd .info{flex:1}
+    .cmd h3{margin:0;font-size:15px}
+    .cmd p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+    .actions{display:flex;gap:8px;margin-left:12px}
+    button{background:transparent;border:1px solid var(--border);color:inherit;padding:6px 10px;border-radius:8px;cursor:pointer}
+    .toggle{display:flex;align-items:center;gap:8px;border:1px solid var(--border);padding:6px 10px;border-radius:999px}
+
+    .term{height:68vh;display:flex;flex-direction:column}
+    .term-output{flex:1;background:rgba(0,0,0,0.45);border-radius:8px;padding:12px;overflow:auto;font-family:monospace;font-size:13px}
+    [data-theme="light"] .term-output{background:#0b1220;color:#e6eef8}
+
+    .term-input{display:flex;gap:8px;margin-top:8px}
+    input.cmdline{flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:transparent;color:inherit}
+
+    .muted{color:var(--muted)}
+    .tag{font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.08)}
+    [data-theme="light"] .tag{background:rgba(0,0,0,0.06)}
+
+    .note{margin-top:10px;color:#ffd6a5;background:rgba(255,214,165,0.08);padding:10px;border-radius:8px;font-size:13px}
+    [data-theme="light"] .note{color:#7a4a00;background:#fff1cf}
+
+    input::placeholder{color:var(--muted)}
+
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Windows Command Reference</h1>
+      <div class="search">
+        <input id="search" placeholder="Search commands (e.g., ipconfig, sfc, robocopy...)" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:transparent;color:inherit" />
+      </div>
+      <div class="toggle">
+        <span id="themeIcon">🌙</span>
+        <button id="themeBtn" title="Toggle theme">Dark</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card commands" id="commandsList">
+        <!-- Commands injected by JS -->
+      </div>
+
+      <aside class="card term">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div><strong>Terminal (simulated)</strong> <span class="muted">— safe demo only</span></div>
+          <div class="tag">No commands are executed</div>
+        </div>
+        <div id="termOutput" class="term-output">C:\Users\you&gt; <span class="muted">Welcome — this terminal simulates output for a handful of commands.</span></div>
+
+        <div class="term-input">
+          <input id="cmdInput" class="cmdline" placeholder="Type a command (e.g., ipconfig /all) and press Enter" />
+          <button id="runBtn">Run</button>
+        </div>
+
+        <div class="note"><strong>Warning:</strong> Some commands can change or delete data (format, del, rd, diskpart). This page only simulates output and does not run any real system commands.</div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // ===== Theme Toggle (Dark / Light) =====
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const saved = localStorage.getItem('cmd_theme') || 'dark';
+    setTheme(saved);
+
+    function setTheme(mode){
+      if(mode === 'light'){
+        root.setAttribute('data-theme','light');
+        themeBtn.textContent = 'Light';
+        themeIcon.textContent = '☀️';
+      } else {
+        root.removeAttribute('data-theme');
+        themeBtn.textContent = 'Dark';
+        themeIcon.textContent = '🌙';
+      }
+      localStorage.setItem('cmd_theme', mode);
+    }
+
+    themeBtn.addEventListener('click', ()=>{
+      const isLight = root.getAttribute('data-theme') === 'light';
+      setTheme(isLight ? 'dark' : 'light');
+    });
+
+
+    const commands = [
+      // ==== BASIC FILE & FOLDER COMMANDS ====
+      {cmd:'dir',desc:'List files and folders in the current directory',example:'dir /a — show hidden files'},
+      {cmd:'cd',desc:'Change directory',example:'cd Desktop'},
+      {cmd:'cls',desc:'Clear the command prompt screen'},
+      {cmd:'copy <src> <dst>',desc:'Copy one or more files to another location',example:'copy a.txt D:\backup'},
+      {cmd:'move <src> <dst>',desc:'Move files from one folder to another',example:'move a.txt D:\docs'},
+      {cmd:'del <file>',desc:'Delete one or more files',danger:true,example:'del *.tmp'},
+      {cmd:'mkdir <name>',desc:'Create a new directory',example:'mkdir Projects'},
+      {cmd:'rmdir <dir> /s /q',desc:'Remove directory and all its contents',danger:true,example:'rmdir OldData /s /q'},
+      {cmd:'type <file>',desc:'Display the contents of a text file',example:'type notes.txt'},
+      {cmd:'tree',desc:'Display folder structure in tree format',example:'tree /f'},
+
+      // ==== SYSTEM INFORMATION ====
+      {cmd:'systeminfo',desc:'Displays OS, hardware, and hotfix information',example:'Useful for inventory'},
+      {cmd:'hostname',desc:'Display the computer name'},
+      {cmd:'ver',desc:'Show Windows version'},
+      {cmd:'whoami',desc:'Display current logged-in user',example:'whoami /priv'},
+
+      // ==== PROCESS & TASK MANAGEMENT ====
+      {cmd:'tasklist',desc:'List running processes',example:'tasklist /v — verbose'},
+      {cmd:'taskkill /PID <pid> /F',desc:'Force kill a process by PID',example:'taskkill /IM notepad.exe /F'},
+      {cmd:'start <app>',desc:'Start a program or command',example:'start notepad'},
+
+      // ==== NETWORKING (BASIC → ADVANCED) ====
+      {cmd:'ipconfig',desc:'Display IP configuration',example:'ipconfig /all'},
+      {cmd:'ipconfig /flushdns',desc:'Flush DNS resolver cache'},
+      {cmd:'ping <host>',desc:'Check network connectivity',example:'ping google.com'},
+      {cmd:'tracert <host>',desc:'Trace route to a host',example:'tracert example.com'},
+      {cmd:'pathping <host>',desc:'Advanced tracing with packet loss info',example:'pathping google.com'},
+      {cmd:'netstat -ano',desc:'View open ports and connections with PIDs',example:'netstat -an | find "LISTEN"'},
+      {cmd:'nslookup',desc:'Query DNS records',example:'nslookup openai.com'},
+      {cmd:'arp -a',desc:'Show ARP cache'},
+      {cmd:'route print',desc:'Show routing table'},
+
+      // ==== DISK & STORAGE ====
+      {cmd:'chkdsk C: /f /r',desc:'Check disk for errors and recover data',example:'Requires reboot for system drive'},
+      {cmd:'diskpart',desc:'Advanced disk partitioning tool',danger:true},
+      {cmd:'format',desc:'Format a disk volume (destroys data)',danger:true},
+      {cmd:'defrag',desc:'Defragment a disk drive',example:'defrag C:'},
+
+      // ==== FILE PERMISSIONS & SECURITY ====
+      {cmd:'attrib',desc:'Change file attributes',example:'attrib +h secret.txt'},
+      {cmd:'icacls',desc:'View or modify file permissions',example:'icacls file.txt'},
+      {cmd:'takeown /f <file>',desc:'Take ownership of a file',danger:true},
+      {cmd:'cipher /w:<dir>',desc:'Securely overwrite deleted data',danger:true},
+
+      // ==== USER & GROUP MANAGEMENT ====
+      {cmd:'net user',desc:'View or manage user accounts',example:'net user username *'},
+      {cmd:'net localgroup',desc:'Manage local groups',example:'net localgroup administrators'},
+      {cmd:'quser',desc:'Show logged-in users on the system'},
+
+      // ==== POWER, SHUTDOWN & RESTART ====
+      {cmd:'shutdown /s /t 0',desc:'Shutdown immediately'},
+      {cmd:'shutdown /r /t 0',desc:'Restart immediately'},
+      {cmd:'powercfg /batteryreport',desc:'Generate battery health report'},
+
+      // ==== WINDOWS REPAIR & MAINTENANCE ====
+      {cmd:'sfc /scannow',desc:'Scan and repair Windows system files'},
+      {cmd:'dism /Online /Cleanup-Image /RestoreHealth',desc:'Repair Windows system image'},
+
+      // ==== BOOT & STARTUP (ADVANCED) ====
+      {cmd:'bcdedit',desc:'Boot configuration editor (very powerful)',danger:true},
+
+      // ==== SERVICES & DRIVERS ====
+      {cmd:'sc query',desc:'List Windows services'},
+      {cmd:'driverquery',desc:'List installed drivers',example:'driverquery /v'},
+
+      // ==== SCHEDULING & AUTOMATION ====
+      {cmd:'schtasks',desc:'Create, delete, and manage scheduled tasks',example:'schtasks /query'},
+
+      // ==== ENVIRONMENT & VARIABLES ====
+      {cmd:'set',desc:'Display environment variables'},
+      {cmd:'path',desc:'View or set system PATH variable'},
+
+      // ==== FILE TRANSFER & BACKUP ====
+      {cmd:'xcopy <src> <dst> /E /H /C /I',desc:'Advanced file copy (legacy)',example:'/Y to auto-overwrite'},
+      {cmd:'robocopy <src> <dst> [options]',desc:'Professional-grade file copy tool',example:'robocopy C:\data D:\backup /MIR'},
+
+      // ==== FIREWALL & NETWORK SECURITY ====
+      {cmd:'netsh advfirewall show allprofiles',desc:'View Windows Firewall status'},
+      {cmd:'netsh advfirewall set allprofiles state off',desc:'Disable firewall (dangerous)',danger:true},
+
+      // ==== POWER USER & SHELL CONTROL ====
+      {cmd:'powershell',desc:'Open Windows PowerShell'},
+      {cmd:'powershell -Command "Get-Process"',desc:'Run a PowerShell command from cmd'},
+
+      // ==== REGISTRY ====
+      {cmd:'regedit',desc:'Open Registry Editor (GUI)',danger:true},
+      {cmd:'reg query',desc:'Query registry values (CLI)'},
+
+      // ==== MISC UTILITIES ====
+      {cmd:'time',desc:'Display or set current system time'},
+      {cmd:'date',desc:'Display or set current system date'},
+      {cmd:'label',desc:'Change disk volume label'},
+      {cmd:'compact',desc:'Display or change file compression'}
+    ];
+
+    const commandsList = document.getElementById('commandsList');
+    const termOutput = document.getElementById('termOutput');
+
+    function render(list){
+      commandsList.innerHTML = '';
+      list.forEach(c=>{
+        const el = document.createElement('div'); el.className='cmd card';
+        el.innerHTML = `
+          <div class="info">
+            <h3>${c.cmd}${c.danger? ' <span style="color:#ffb4a2;font-size:12px">(danger)</span>': ''}</h3>
+            <p>${c.desc}</p>
+            ${c.example? `<div style="margin-top:8px;color:var(--muted);font-size:13px"><strong>Example:</strong> ${c.example}</div>` : ''}
+          </div>
+          <div class="actions">
+            <button data-copy='${escapeHtml(c.cmd)}'>Copy</button>
+            <button data-run='${escapeHtml(c.cmd)}'>Simulate</button>
+          </div>
+        `;
+        commandsList.appendChild(el);
+      });
+    }
+
+    function escapeHtml(s){ return s.replaceAll("'","\\'").replaceAll('"','\"'); }
+
+    render(commands);
+
+    // Search
+    document.getElementById('search').addEventListener('input', (e)=>{
+      const q = e.target.value.toLowerCase().trim();
+      if(!q) render(commands);
+      else render(commands.filter(c => (c.cmd + ' ' + c.desc + ' ' + (c.example||'')).toLowerCase().includes(q)));
+    });
+
+    // Copy & simulate handlers
+    commandsList.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button'); if(!btn) return;
+      const copy = btn.getAttribute('data-copy');
+      const run = btn.getAttribute('data-run');
+      if(copy){ navigator.clipboard.writeText(copy).then(()=>flashTerm(`Copied: ${copy}`)).catch(()=>flashTerm('Copy failed')) }
+      if(run){ simulateCommand(run) }
+    });
+
+    // Terminal input
+    document.getElementById('runBtn').addEventListener('click', ()=>{
+      const v = document.getElementById('cmdInput').value.trim(); if(v) simulateCommand(v);
+    });
+    document.getElementById('cmdInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('runBtn').click(); } });
+
+    function flashTerm(msg){ const t = document.createElement('div'); t.textContent = msg; t.style.opacity=0; termOutput.appendChild(t); t.style.transition='opacity .2s'; setTimeout(()=>t.style.opacity=1,10); termOutput.scrollTop = termOutput.scrollHeight; setTimeout(()=>t.remove(),2200); }
+
+    function simulateCommand(input){
+      const cmd = input.toLowerCase();
+      let out = '\nC:\\Users\\you>' + input + '\n';
+      if(cmd.startsWith('ipconfig')){
+        out += `Windows IP Configuration\n\nEthernet adapter Ethernet:\n   Connection-specific DNS Suffix  . : example.local\n   IPv4 Address. . . . . . . . . . . : 192.168.1.42\n   Subnet Mask . . . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . . . : 192.168.1.1\n`;
+      } else if(cmd.startsWith('ping')){
+        out += `Pinging ${input.split(' ')[1] || 'host'} with 32 bytes of data:\nReply from 93.184.216.34: bytes=32 time=22ms TTL=56\n`;
+      } else if(cmd.startsWith('tracert')){
+        out += `Tracing route to ${input.split(' ')[1] || 'host'} [93.184.216.34] over a maximum of 30 hops:\n  1     2 ms     1 ms     2 ms  192.168.1.1\n  2    10 ms    12 ms    11 ms  10.10.0.1\n  3    22 ms    21 ms    20 ms  93.184.216.34\n`;
+      } else if(cmd.startsWith('tasklist')){
+        out += `Image Name                     PID Session Name        Session#    Mem Usage\n========================= ======== ================ =========== ============\nnotepad.exe                  8424 Console                    1     10,240 K\n`;
+      } else if(cmd.includes('sfc')){
+        out += `Beginning system scan. This process will take some time.\nBeginning verification phase of system scan.\nVerification 100% complete.\nWindows Resource Protection did not find any integrity violations.\n`;
+      } else if(cmd.includes('chkdsk')){
+        out += `The type of the file system is NTFS.\nVolume label is Windows.\nStage 1: Examining basic file system structure ...\nWindows has scanned the file system and found no problems.\n`;
+      } else if(cmd.startsWith('systeminfo')){
+        out += `Host Name:                 YOUR-PC\nOS Name:                   Microsoft Windows 10 Pro\nOS Version:                10.0.19044 N/A Build 19044\nSystem Manufacturer:       ExampleCorp\nSystem Model:              ExampleModel\n`;
+      } else if(cmd.startsWith('powercfg') && cmd.includes('batteryreport')){
+        out += `Battery life report saved to C:\\Users\\you\\battery-report.html\n`;
+      } else if(cmd.startsWith('shutdown')){
+        out += `Shutdown command issued (simulated).\n`;
+      } else if(cmd.startsWith('robocopy')){
+        out += `Started : Sun Dec 01 2025 12:00:00\nFiles : 1024\nNew File : example.txt\n`;
+      } else if(cmd.includes('diskpart') || cmd.includes('format') || cmd.includes('cipher /w') || cmd.includes('regedit')){
+        out += `ERROR: This command is dangerous. Simulation blocked to prevent accidental data loss.\n`;
+      } else {
+        out += `The syntax of the command is incorrect or the command is not recognized. (simulated)\n`;
+      }
+
+      appendToTerminal(out);
+    }
+
+    function appendToTerminal(text){
+      const pre = document.createElement('pre'); pre.textContent = text; termOutput.appendChild(pre); termOutput.scrollTop = termOutput.scrollHeight; }
+
+  </script>
+</body>
+</html>
